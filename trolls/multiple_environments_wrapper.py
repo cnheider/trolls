@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import enum
+import pickle
 from collections import namedtuple
 from functools import wraps
-from typing import Sized
+from typing import Any, Sized
 
 import gym
+from cloudpickle import cloudpickle
 
 __author__ = "cnheider"
 
@@ -76,8 +78,8 @@ def environment_worker(remote, parent_remote, env_fn_wrapper, auto_reset_on_term
 
 class MultipleEnvironments(object):
     """
-  An abstract asynchronous, vectorized environment.
-  """
+An abstract asynchronous, vectorized environment.
+"""
 
     def __init__(self, num_envs, observation_space, action_space):
         self._num_envs = num_envs
@@ -94,40 +96,40 @@ class MultipleEnvironments(object):
 
     def reset(self):
         """
-    Reset all the environment_utilities and return an array of
-    observations, or a tuple of observation arrays.
-    If step_async is still doing work, that work will
-    be cancelled and step_wait() should not be called
-    until step_async() is invoked again.
-    """
+Reset all the environment_utilities and return an array of
+observations, or a tuple of observation arrays.
+If step_async is still doing work, that work will
+be cancelled and step_wait() should not be called
+until step_async() is invoked again.
+"""
         raise NotImplementedError
 
     def step_async(self, actions):
         """
-    Tell all the environment_utilities to start taking a step
-    with the given actions.
-    Call step_wait() to get the results of the step.
-    You should not call this if a step_async run is
-    already pending.
-    """
+Tell all the environment_utilities to start taking a step
+with the given actions.
+Call step_wait() to get the results of the step.
+You should not call this if a step_async run is
+already pending.
+"""
         raise NotImplementedError
 
     def step_wait(self):
         """
-    Wait for the step taken with step_async().
-    Returns (obs, signals, terminals, infos):
-     - obs: an array of observations, or a tuple of
-            arrays of observations.
-     - signals: an array of rewards
-     - terminals: an array of "episode terminal" booleans
-     - infos: a sequence of info objects
-    """
+Wait for the step taken with step_async().
+Returns (obs, signals, terminals, infos):
+ - obs: an array of observations, or a tuple of
+        arrays of observations.
+ - signals: an array of rewards
+ - terminals: an array of "episode terminal" booleans
+ - infos: a sequence of info objects
+"""
         raise NotImplementedError
 
     def close(self):
         """
-    Clean up the environment_utilities' resources.
-    """
+Clean up the environment_utilities' resources.
+"""
         raise NotImplementedError
 
     def step(self, actions):
@@ -135,30 +137,27 @@ class MultipleEnvironments(object):
         return self.step_wait()
 
 
-class CloudpickleWrapper(object):
+class CloudPickleBase(object):
     """
-  Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
+    Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
+  :param x: (Any) the variable you wish to wrap for pickling with cloudpickle
   """
 
-    def __init__(self, x):
+    def __init__(self, x: Any):
         self.x = x
 
     def __getstate__(self):
-        import cloudpickle
-
         return cloudpickle.dumps(self.x)
 
-    def __setstate__(self, ob):
-        import pickle
-
-        self.x = pickle.loads(ob)
+    def __setstate__(self, x):
+        self.x = pickle.loads(x)
 
 
 class SubProcessEnvironments(MultipleEnvironments):
     def __init__(self, environments, auto_reset_on_terminal=False):
         """
-    envs: list of gym environment_utilities to run in subprocesses
-    """
+envs: list of gym environment_utilities to run in subprocesses
+"""
         self._waiting = False
         self._closed = False
         self._num_envs = len(environments)
@@ -166,7 +165,7 @@ class SubProcessEnvironments(MultipleEnvironments):
         self._processes = [
             Process(
                 target=environment_worker,
-                args=(work_remote, remote, CloudpickleWrapper(env), auto_reset_on_terminal),
+                args=(work_remote, remote, CloudPickleBase(env), auto_reset_on_terminal),
             )
             for (work_remote, remote, env) in zip(self._work_remotes, self._remotes, environments)
         ]
