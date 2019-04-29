@@ -4,16 +4,14 @@ import enum
 import pickle
 from collections import namedtuple
 from functools import wraps
+from multiprocessing import Pipe, Process
 from typing import Any, Sized
 
 import gym
+import numpy as np
 from cloudpickle import cloudpickle
 
 __author__ = "cnheider"
-
-from multiprocessing import Pipe, Process
-
-import numpy as np
 
 
 class EnvironmentWorkerCommands(enum.Enum):
@@ -118,11 +116,11 @@ already pending.
         """
 Wait for the step taken with step_async().
 Returns (obs, signals, terminals, infos):
- - obs: an array of observations, or a tuple of
-        arrays of observations.
- - signals: an array of rewards
- - terminals: an array of "episode terminal" booleans
- - infos: a sequence of info objects
+- obs: an array of observations, or a tuple of
+    arrays of observations.
+- signals: an array of rewards
+- terminals: an array of "episode terminal" booleans
+- infos: a sequence of info objects
 """
         raise NotImplementedError
 
@@ -139,9 +137,9 @@ Clean up the environment_utilities' resources.
 
 class CloudPickleBase(object):
     """
-    Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
-  :param x: (Any) the variable you wish to wrap for pickling with cloudpickle
-  """
+  Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
+:param x: (Any) the variable you wish to wrap for pickling with cloudpickle
+"""
 
     def __init__(self, x: Any):
         self.x = x
