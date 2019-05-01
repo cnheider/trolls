@@ -1,6 +1,6 @@
 from setuptools import find_packages
 
-from version import get_version
+from trolls.version import get_version
 
 
 class TrollsPackage:
