@@ -220,3 +220,8 @@ envs: list of gym environment_utilities to run in subprocesses
 
     def __len__(self):
         return self._num_envs
+
+
+if __name__ == "__main__":
+    envs = [make_env("Pendulum-v0") for _ in range(3)]
+    SubProcessEnvironments(envs)
