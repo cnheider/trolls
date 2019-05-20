@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 import re
 
-with open(pathlib.Path(__file__) / "trolls" / "version.py", "r") as f:
+with open(pathlib.Path(__file__).parent / "trolls" / "version.py", "r") as f:
     # get version string from module
     version = re.search(r"__version__ = ['\"]([^'\"]*)['\"]", f.read(), re.M).group(1)
 
