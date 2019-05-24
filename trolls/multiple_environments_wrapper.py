@@ -3,6 +3,7 @@
 import enum
 import pickle
 from collections import namedtuple
+from contextlib import suppress
 from functools import wraps
 from multiprocessing import Pipe, Process
 from typing import Any, Sized
@@ -32,7 +33,7 @@ EC = EnvironmentCommand
 GymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "info"))
 
 
-def make_env(env_nam):
+def make_gym_env(env_nam):
     @wraps(env_nam)
     def wrapper():
         env = gym.make(env_nam)
@@ -41,37 +42,45 @@ def make_env(env_nam):
     return wrapper
 
 
+def make_atari_env(env_name, rank, seed):
+    env = make_atari(env_name)
+    env.seed(seed + rank)
+    env = wrap_deepmind(env, episode_life=False, clip_rewards=False)
+    return env
+
+
 def environment_worker(remote, parent_remote, env_fn_wrapper, auto_reset_on_terminal=False):
     parent_remote.close()
     env = env_fn_wrapper.x()
     terminated = False
-    while True:
-        cmd, data = remote.recv()
-        if cmd is EWC.step:
-            observation, signal, terminal, info = env.step(data)
-            if terminated:
-                signal = 0
-            if terminal:
-                terminated = True
-                if auto_reset_on_terminal:
-                    observation = env.reset()
-                    terminated = False
-            remote.send(GymTuple(observation, signal, terminal, info))
-        elif cmd is EWC.reset:
-            observation = env.reset()
-            terminated = False
-            remote.send(observation)
-        elif cmd is EWC.close:
-            remote.close()
-            break
-        elif cmd is EWC.get_spaces:
-            remote.send((env.observation_space, env.action_space))
-        elif cmd is EWC.render:
-            env.render()
-        elif cmd is EWC.seed:
-            env.seed(data)
-        else:
-            raise NotImplementedError
+    with suppress(UserWarning):
+        while True:
+            cmd, data = remote.recv()
+            if cmd is EWC.step:
+                observation, signal, terminal, info = env.step(data)
+                if terminated:
+                    signal = 0
+                if terminal:
+                    terminated = True
+                    if auto_reset_on_terminal:
+                        observation = env.reset()
+                        terminated = False
+                remote.send(GymTuple(observation, signal, terminal, info))
+            elif cmd is EWC.reset:
+                observation = env.reset()
+                terminated = False
+                remote.send(observation)
+            elif cmd is EWC.close:
+                remote.close()
+                break
+            elif cmd is EWC.get_spaces:
+                remote.send((env.observation_space, env.action_space))
+            elif cmd is EWC.render:
+                env.render()
+            elif cmd is EWC.seed:
+                env.seed(data)
+            else:
+                raise NotImplementedError
 
 
 class MultipleEnvironments(object):
@@ -223,5 +232,5 @@ envs: list of gym environment_utilities to run in subprocesses
 
 
 if __name__ == "__main__":
-    envs = [make_env("Pendulum-v0") for _ in range(3)]
+    envs = [make_gym_env("Pendulum-v0") for _ in range(3)]
     SubProcessEnvironments(envs)
