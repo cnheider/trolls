@@ -1,5 +1,5 @@
 gym==0.12.4
-numpy
+numpy==1.16.3
 six
 sorcery
 pytest
