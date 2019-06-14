@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import enum
 import pickle
+import warnings
 from collections import namedtuple
 from contextlib import suppress
 from functools import wraps
@@ -50,10 +51,11 @@ def make_atari_env(env_name, rank, seed):
 
 
 def environment_worker(remote, parent_remote, env_fn_wrapper, auto_reset_on_terminal=False):
-    parent_remote.close()
-    env = env_fn_wrapper.x()
-    terminated = False
+    warnings.simplefilter("ignore")
     with suppress(UserWarning):
+        parent_remote.close()
+        env = env_fn_wrapper.x()
+        terminated = False
         while True:
             cmd, data = remote.recv()
             if cmd is EWC.step:
@@ -126,7 +128,7 @@ already pending.
 Wait for the step taken with step_async().
 Returns (obs, signals, terminals, infos):
 - obs: an array of observations, or a tuple of
-    arrays of observations.
+arrays of observations.
 - signals: an array of rewards
 - terminals: an array of "episode terminal" booleans
 - infos: a sequence of info objects
@@ -146,7 +148,7 @@ Clean up the environment_utilities' resources.
 
 class CloudPickleBase(object):
     """
-  Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
+Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
 :param x: (Any) the variable you wish to wrap for pickling with cloudpickle
 """
 
