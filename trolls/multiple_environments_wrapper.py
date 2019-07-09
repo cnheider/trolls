@@ -12,6 +12,7 @@ from typing import Any, Sized
 import gym
 import numpy as np
 from cloudpickle import cloudpickle
+from ray.rllib.env.atari_wrappers import wrap_deepmind
 
 __author__ = "cnheider"
 
@@ -52,7 +53,7 @@ def make_atari_env(env_name, rank, seed):
 
 def environment_worker(remote, parent_remote, env_fn_wrapper, auto_reset_on_terminal=False):
     warnings.simplefilter("ignore")
-    with suppress(UserWarning):
+    with suppress(UserWarning, KeyboardInterrupt):
         parent_remote.close()
         env = env_fn_wrapper.x()
         terminated = False
