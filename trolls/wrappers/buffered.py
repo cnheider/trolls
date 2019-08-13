@@ -13,13 +13,13 @@ from gym.spaces.box import Box
 class BufferedObsEnv(gym.ObservationWrapper):
     """Buffer observations and stack e.g. for frame skipping.
 
-  n is the length of the buffer, and number of observations stacked.
-  skip is the number of steps between buffered observations (min=1).
+n is the length of the buffer, and number of observations stacked.
+skip is the number of steps between buffered observations (min=1).
 
-  n.b. first obs is the oldest, last obs is the newest.
-       the buffer is zeroed out on reset.
-       *must* call reset() for init!
-  """
+n.b. first obs is the oldest, last obs is the newest.
+     the buffer is zeroed out on reset.
+     *must* call reset() for init!
+"""
 
     def __init__(self, env=None, buffer_length=4, skip=4, shape=(84, 84), channel_last=True, maxFrames=True):
         super().__init__(env)
@@ -77,10 +77,10 @@ class BufferedObsEnv(gym.ObservationWrapper):
     def _rgb2y(im):
         """Converts an RGB image to a Y image (as in YUV).
 
-    These coefficients are taken from the torch/image library.
-    Beware: these are more critical than you might think, as the
-    monochromatic contrast can be surprisingly low.
-    """
+These coefficients are taken from the torch/image library.
+Beware: these are more critical than you might think, as the
+monochromatic contrast can be surprisingly low.
+"""
         if len(im.shape) < 3:
             return im
 

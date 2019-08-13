@@ -1,7 +1,6 @@
 from multiprocessing import Pipe, Process
 
 import numpy as np
-
 from experimental import CloudPickleWrapper
 from wrappers.vector_environments import VectorEnvironments
 
@@ -36,8 +35,8 @@ def worker(remote, parent_remote, env_fn_wrapper):
 class SubProcessVectorEnvironments(VectorEnvironments):
     def __init__(self, env_fns, render_interval):
         """ Minor addition to SubprocVecEnv, automatically renders environments
-    envs: list of gym environments to run in subprocesses
-    """
+envs: list of gym environments to run in subprocesses
+"""
         self.closed = False
         nenvs = len(env_fns)
         self.remotes, self.work_remotes = zip(*[Pipe() for _ in range(nenvs)])
