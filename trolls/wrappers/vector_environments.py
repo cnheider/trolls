@@ -15,51 +15,51 @@ class VectorEnvironments(ABC):
         self.action_space = action_space
 
     """
-  An abstract asynchronous, vectorized environment.
-  """
+An abstract asynchronous, vectorized environment.
+"""
 
     @abstractmethod
     def reset(self):
         """
-    Reset all the environments and return an array of
-    observations.
+Reset all the environments and return an array of
+observations.
 
-    If step_async is still doing work, that work will
-    be cancelled and step_wait() should not be called
-    until step_async() is invoked again.
-    """
+If step_async is still doing work, that work will
+be cancelled and step_wait() should not be called
+until step_async() is invoked again.
+"""
         pass
 
     @abstractmethod
     def step_async(self, actions):
         """
-    Tell all the environments to start taking a step
-    with the given actions.
-    Call step_wait() to get the results of the step.
+Tell all the environments to start taking a step
+with the given actions.
+Call step_wait() to get the results of the step.
 
-    You should not call this if a step_async run is
-    already pending.
-    """
+You should not call this if a step_async run is
+already pending.
+"""
         pass
 
     @abstractmethod
     def step_wait(self):
         """
-    Wait for the step taken with step_async().
+Wait for the step taken with step_async().
 
-    Returns (obs, rews, dones, info):
-     - obs: an array of observations
-     - rews: an array of rewards
-     - dones: an array of "episode done" booleans
-     - info: an array of info objects
-    """
+Returns (obs, rews, dones, info):
+ - obs: an array of observations
+ - rews: an array of rewards
+ - dones: an array of "episode done" booleans
+ - info: an array of info objects
+"""
         pass
 
     @abstractmethod
     def close(self):
         """
-    Clean up the environments' resources.
-    """
+Clean up the environments' resources.
+"""
         pass
 
     def step(self, actions):

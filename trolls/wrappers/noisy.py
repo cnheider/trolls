@@ -12,12 +12,12 @@ class NoisyWrapper(gym.ObservationWrapper):
 
     def __init__(self, env=None, percent_pad=5, bottom_margin=20):
         """
-    # doom 20px bottom is useless
+# doom 20px bottom is useless
 
-    :param env:
-    :param percent_pad:
-    :param bottom_margin:
-    """
+:param env:
+:param percent_pad:
+:param bottom_margin:
+"""
         super().__init__(env)
         self.original_shape = env.space.shape
         new_side = int(round(max(self.original_shape[:-1]) * 100.0 / (100.0 - percent_pad)))

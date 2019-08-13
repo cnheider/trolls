@@ -12,7 +12,7 @@ from typing import Any, Sized
 import gym
 import numpy as np
 from cloudpickle import cloudpickle
-from ray.rllib.env.atari_wrappers import wrap_deepmind
+
 
 __author__ = "cnheider"
 
@@ -45,6 +45,8 @@ def make_gym_env(env_nam):
 
 
 def make_atari_env(env_name, rank, seed):
+    from ray.rllib.env.atari_wrappers import wrap_deepmind
+
     env = make_atari(env_name)
     env.seed(seed + rank)
     env = wrap_deepmind(env, episode_life=False, clip_rewards=False)
@@ -86,10 +88,13 @@ def environment_worker(remote, parent_remote, env_fn_wrapper, auto_reset_on_term
                 raise NotImplementedError
 
 
-class MultipleEnvironments(object):
+class MultipleEnvironments(gym.Env):
     """
 An abstract asynchronous, vectorized environment.
 """
+
+    def render(self, mode="human"):
+        pass
 
     def __init__(self, num_envs, observation_space, action_space):
         self._num_envs = num_envs
