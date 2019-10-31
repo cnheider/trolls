@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 
 from collections import deque
 
 import gym
-import numpy as np
+import numpy
 from PIL import Image
 from gym.spaces.box import Box
 
@@ -46,8 +46,8 @@ n.b. first obs is the oldest, last obs is the newest.
         self.counter += 1
         if self.counter % self.skip == 0:
             self.buffer.append(obs)
-        new_obs = np.stack(self.buffer, axis=self.ch_axis)
-        return new_obs.astype(np.float32) * self.scale
+        new_obs = numpy.stack(self.buffer, axis=self.ch_axis)
+        return new_obs.astype(numpy.float32) * self.scale
 
     def _reset(self):
         """Clear buffer and re-fill by duplicating the first observation."""
@@ -56,20 +56,21 @@ n.b. first obs is the oldest, last obs is the newest.
         self.buffer.clear()
         self.counter = 0
         for _ in range(self.buffer_length - 1):
-            self.buffer.append(np.zeros_like(obs))
+            self.buffer.append(numpy.zeros_like(obs))
         self.buffer.append(obs)
-        new_obs = np.stack(self.buffer, axis=self.ch_axis)
-        return new_obs.astype(np.float32) * self.scale
+        new_obs = numpy.stack(self.buffer, axis=self.ch_axis)
+        return new_obs.astype(numpy.float32) * self.scale
 
     def _convert(self, obs):
         self.obs_buffer.append(obs)
         if self._max_frames:
-            max_frame = np.max(np.stack(self.obs_buffer), axis=0)
+            max_frame = numpy.max(numpy.stack(self.obs_buffer), axis=0)
         else:
             max_frame = obs
-        intensity_frame = self._rgb2y(max_frame).astype(np.uint8)
-        small_frame = np.array(
-            Image.fromarray(intensity_frame).resize(self.obs_shape, resample=Image.BILINEAR), dtype=np.uint8
+        intensity_frame = self._rgb2y(max_frame).astype(numpy.uint8)
+        small_frame = numpy.array(
+            Image.fromarray(intensity_frame).resize(self.obs_shape, resample=Image.BILINEAR),
+            dtype=numpy.uint8,
         )
         return small_frame
 
@@ -84,4 +85,4 @@ monochromatic contrast can be surprisingly low.
         if len(im.shape) < 3:
             return im
 
-        return np.sum(im * [0.299, 0.587, 0.114], axis=2)
+        return numpy.sum(im * [0.299, 0.587, 0.114], axis=2)

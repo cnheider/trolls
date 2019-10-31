@@ -10,11 +10,11 @@ from multiprocessing import Pipe, Process
 from typing import Any, Sized
 
 import gym
-import numpy as np
+import numpy
 from cloudpickle import cloudpickle
 
 
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 
 
 class EnvironmentWorkerCommands(enum.Enum):
@@ -216,12 +216,12 @@ envs: list of gym environment_utilities to run in subprocesses
         results = [remote.recv() for remote in self._remotes]
         self._waiting = False
         obs, signals, terminals, infos = zip(*results)
-        return np.stack(obs), np.stack(signals), np.stack(terminals), infos
+        return numpy.stack(obs), numpy.stack(signals), numpy.stack(terminals), infos
 
     def reset(self):
         for remote in self._remotes:
             remote.send(EC(EWC.reset, None))
-        return np.stack([remote.recv() for remote in self._remotes])
+        return numpy.stack([remote.recv() for remote in self._remotes])
 
     def close(self):
         if self._closed:

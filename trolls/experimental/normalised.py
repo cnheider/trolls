@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 
 import pickle
 from abc import ABC, abstractmethod
@@ -126,7 +126,7 @@ Vectorized environment base class
         return self.venv.get_images()
 
 
-import numpy as np
+import numpy
 
 
 class RunningMeanStd(object):
@@ -137,13 +137,13 @@ https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algor
 :param epsilon: (float) helps with arithmetic issues
 :param shape: (tuple) the shape of the data stream's output
 """
-        self.mean = np.zeros(shape, "float64")
-        self.var = np.ones(shape, "float64")
+        self.mean = numpy.zeros(shape, "float64")
+        self.var = numpy.ones(shape, "float64")
         self.count = epsilon
 
     def update(self, arr):
-        batch_mean = np.mean(arr, axis=0)
-        batch_var = np.var(arr, axis=0)
+        batch_mean = numpy.mean(arr, axis=0)
+        batch_var = numpy.var(arr, axis=0)
         batch_count = arr.shape[0]
         self.update_from_moments(batch_mean, batch_var, batch_count)
 
@@ -154,7 +154,7 @@ https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algor
         new_mean = self.mean + delta * batch_count / tot_count
         m_a = self.var * self.count
         m_b = batch_var * batch_count
-        m_2 = m_a + m_b + np.square(delta) * self.count * batch_count / (self.count + batch_count)
+        m_2 = m_a + m_b + numpy.square(delta) * self.count * batch_count / (self.count + batch_count)
         new_var = m_2 / (self.count + batch_count)
 
         new_count = batch_count + self.count
@@ -196,13 +196,13 @@ has support for saving/loading moving average,
         self.clip_obs = clip_obs
         self.clip_reward = clip_reward
         # Returns: discounted rewards
-        self.ret = np.zeros(self.num_envs)
+        self.ret = numpy.zeros(self.num_envs)
         self.gamma = gamma
         self.epsilon = epsilon
         self.training = training
         self.norm_obs = norm_obs
         self.norm_reward = norm_reward
-        self.old_obs = np.array([])
+        self.old_obs = numpy.array([])
 
     def step_wait(self):
         """
@@ -218,8 +218,8 @@ where 'news' is a boolean vector indicating whether each element is new.
         if self.norm_reward:
             if self.training:
                 self.ret_rms.update(self.ret)
-            rews = np.clip(
-                rews / np.sqrt(self.ret_rms.var + self.epsilon), -self.clip_reward, self.clip_reward
+            rews = numpy.clip(
+                rews / numpy.sqrt(self.ret_rms.var + self.epsilon), -self.clip_reward, self.clip_reward
             )
         self.ret[news] = 0
         return obs, rews, news, infos
@@ -231,8 +231,8 @@ where 'news' is a boolean vector indicating whether each element is new.
         if self.norm_obs:
             if self.training:
                 self.obs_rms.update(obs)
-            obs = np.clip(
-                (obs - self.obs_rms.mean) / np.sqrt(self.obs_rms.var + self.epsilon),
+            obs = numpy.clip(
+                (obs - self.obs_rms.mean) / numpy.sqrt(self.obs_rms.var + self.epsilon),
                 -self.clip_obs,
                 self.clip_obs,
             )
@@ -253,11 +253,11 @@ returns the unnormalized observation
 Reset all environments
 """
         obs = self.venv.reset()
-        if len(np.array(obs).shape) == 1:  # for when num_cpu is 1
+        if len(numpy.array(obs).shape) == 1:  # for when num_cpu is 1
             self.old_obs = [obs]
         else:
             self.old_obs = obs
-        self.ret = np.zeros(self.num_envs)
+        self.ret = numpy.zeros(self.num_envs)
         return self._normalize_observation(obs)
 
     def save_running_average(self, path):

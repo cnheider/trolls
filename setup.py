@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 
-def python_version_check():
+def python_version_check(major=3, minor=6):
     import sys
 
-    assert sys.version_info.major == 3 and sys.version_info.minor >= 6, (
-        f"This project is utilises language features only present Python 3.6 and greater. "
+    assert sys.version_info.major == major and sys.version_info.minor >= minor, (
+        f"This project is utilises language features only present Python {major}.{minor} and greater. "
         f"You are running {sys.version_info}."
     )
 
@@ -21,7 +21,11 @@ with open(pathlib.Path(__file__).parent / "trolls" / "__init__.py", "r") as proj
     # get version string from module
     version = re.search(r"__version__ = ['\"]([^'\"]*)['\"]", content, re.M).group(1)
 
-    project_name = re.search(r"PROJECT_NAME = ['\"]([^'\"]*)['\"]", content, re.M).group(1)
+    project_name = re.search(r"__project__ = ['\"]([^'\"]*)['\"]", content, re.M).group(1)
+    author = re.search(r"__author__ = ['\"]([^'\"]*)['\"]", content, re.M).group(
+        1
+    )  # get version string from module
+__author__ = author
 
 
 class TrollsPackage:
@@ -59,7 +63,7 @@ class TrollsPackage:
 
     @property
     def author_name(self):
-        return "Christian Heider Nielsen"
+        return author
 
     @property
     def author_email(self):
@@ -75,14 +79,10 @@ class TrollsPackage:
 
     @property
     def package_data(self):
-        # data = glob.glob('environments/mab/**', recursive=True)
+        # data = glob.glob('data/', recursive=True)
         return {
-            # 'neodroid':[
+            # 'PackageName':[
             # *data
-            # 'environments/mab/**',
-            # 'environments/mab/**_Data/*',
-            # 'environments/mab/windows/*'
-            # 'environments/mab/windows/*_Data/*'
             #  ]
         }
 
@@ -159,8 +159,6 @@ class TrollsPackage:
     def version(self):
         return version
 
-
-__author__ = "cnheider"
 
 from setuptools import setup, find_packages
 

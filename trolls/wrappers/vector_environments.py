@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 import numpy
 
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 
 
 class VectorEnvironments(ABC):

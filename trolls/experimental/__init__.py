@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 
 from .baselines_utilities import *
 from .cloud_pickle_wrapper import *

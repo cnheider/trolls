@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-__author__ = "cnheider"
+__author__ = "Christian Heider Nielsen"
 
 import gym
-import numpy as np
+import numpy
 from gym.spaces.box import Box
 
 
@@ -27,7 +27,7 @@ class NoisyWrapper(gym.ObservationWrapper):
         self.ob = None
 
     def _observation(self, obs):
-        im_noise = np.random.randint(0, 256, self.new_shape).astype(obs.dtype)
+        im_noise = numpy.random.randint(0, 256, self.new_shape).astype(obs.dtype)
         im_noise[: self.original_shape[0] - self.bottom_margin, : self.original_shape[1], :] = obs[
             : -self.bottom_margin, :, :
         ]
@@ -37,3 +37,23 @@ class NoisyWrapper(gym.ObservationWrapper):
     # def render(self, mode='human', close=False):
     #     temp = self.env.render(mode, close)
     #     return self.ob
+
+
+class NormalisedActions(gym.ActionWrapper):
+    def reverse_action(self, action):
+        low = self.action_space.low
+        high = self.action_space.high
+
+        action = 2 * (action - low) / (high - low) - 1
+        action = numpy.clip(action, low, high)
+
+        return action
+
+    def action(self, action):
+        low = self.action_space.low
+        high = self.action_space.high
+
+        action = low + (action + 1.0) * 0.5 * (high - low)
+        action = numpy.clip(action, low, high)
+
+        return action
