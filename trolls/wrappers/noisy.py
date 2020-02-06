@@ -37,23 +37,3 @@ class NoisyWrapper(gym.ObservationWrapper):
     # def render(self, mode='human', close=False):
     #     temp = self.env.render(mode, close)
     #     return self.ob
-
-
-class NormalisedActions(gym.ActionWrapper):
-    def reverse_action(self, action):
-        low = self.action_space.low
-        high = self.action_space.high
-
-        action = 2 * (action - low) / (high - low) - 1
-        action = numpy.clip(action, low, high)
-
-        return action
-
-    def action(self, action):
-        low = self.action_space.low
-        high = self.action_space.high
-
-        action = low + (action + 1.0) * 0.5 * (high - low)
-        action = numpy.clip(action, low, high)
-
-        return action

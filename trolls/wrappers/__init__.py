@@ -6,3 +6,6 @@ from .buffered import *
 from .clipped import *
 from .noisy import *
 from .skip import *
+from .normalised import *
+from .bonus import *
+from .vector_environments import *

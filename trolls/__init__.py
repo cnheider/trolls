@@ -11,7 +11,7 @@ from apppath.app_path import AppPath
 
 __project__ = "Trolls"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __doc__ = r"""
 Created on 27/04/2019
 
@@ -86,3 +86,5 @@ if __version__ is None:
 __version_info__ = tuple(int(segment) for segment in __version__.split("."))
 
 from .multiple_environments_wrapper import *
+from .moving_average_threshold import *
+from .wrappers import *

@@ -7,6 +7,8 @@ import numpy
 
 __author__ = "Christian Heider Nielsen"
 
+__all__ = ["VectorEnvironments", "VectorEnvironmentsWrapper", "VectorWrap"]
+
 
 class VectorEnvironments(ABC):
     def __init__(self, num_envs, observation_space, action_space):
@@ -103,16 +105,10 @@ class VectorWrap:
         self.env = env
 
     def react(self, a, *args, **kwargs):
-        observables, signal, terminated = self.env.react(a[0], *args, **kwargs)
-
-        observables = numpy.array([observables])
-        signal = numpy.array([signal])
-        terminated = numpy.array([terminated])
-
-        return observables, signal, terminated
+        return self.env.react(a[0], *args, **kwargs)
 
     def reset(self):
-        return [self.env.reset()]
+        return self.env.reset()
 
     def __getattr__(self, item):
         return getattr(self.env, item)
