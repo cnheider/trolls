@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 import enum
 import pickle
 import warnings
@@ -10,14 +11,19 @@ from multiprocessing import Pipe, Process
 from typing import Any, Sized
 
 import gym
-import numpy as np
 from cloudpickle import cloudpickle
 
+__author__ = "Christian Heider Nielsen"
 
-__author__ = "cnheider"
+from trolls.wrappers import NormalisedActions
+from warg import drop_unused_kws
 
 
 class EnvironmentWorkerCommands(enum.Enum):
+    """
+
+  """
+
     step = enum.auto()
     reset = enum.auto()
     close = enum.auto()
@@ -35,25 +41,26 @@ EC = EnvironmentCommand
 GymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "info"))
 
 
-def make_gym_env(env_nam):
+def make_gym_env(env_nam: str, normalise_actions: bool = True) -> callable:
     @wraps(env_nam)
-    def wrapper():
+    def wrapper() -> gym.Env:
         env = gym.make(env_nam)
+        if normalise_actions:
+            env = NormalisedActions(env)
         return env
 
     return wrapper
 
 
-def make_atari_env(env_name, rank, seed):
-    from ray.rllib.env.atari_wrappers import wrap_deepmind
+def environment_worker(remote, parent_remote, env_fn_wrapper: callable, auto_reset_on_terminal: bool = False):
+    """
 
-    env = make_atari(env_name)
-    env.seed(seed + rank)
-    env = wrap_deepmind(env, episode_life=False, clip_rewards=False)
-    return env
-
-
-def environment_worker(remote, parent_remote, env_fn_wrapper, auto_reset_on_terminal=False):
+  :param remote:
+  :param parent_remote:
+  :param env_fn_wrapper:
+  :param auto_reset_on_terminal:
+  :return:
+  """
     warnings.simplefilter("ignore")
     with suppress(UserWarning, KeyboardInterrupt):
         parent_remote.close()
@@ -169,7 +176,11 @@ Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use p
 
 
 class SubProcessEnvironments(MultipleEnvironments):
-    def __init__(self, environments, auto_reset_on_terminal=False):
+    """
+
+  """
+
+    def __init__(self, environments, auto_reset_on_terminal_state: bool = False):
         """
 envs: list of gym environment_utilities to run in subprocesses
 """
@@ -180,7 +191,7 @@ envs: list of gym environment_utilities to run in subprocesses
         self._processes = [
             Process(
                 target=environment_worker,
-                args=(work_remote, remote, CloudPickleBase(env), auto_reset_on_terminal),
+                args=(work_remote, remote, CloudPickleBase(env), auto_reset_on_terminal_state),
             )
             for (work_remote, remote, env) in zip(self._work_remotes, self._remotes, environments)
         ]
@@ -194,7 +205,12 @@ envs: list of gym environment_utilities to run in subprocesses
         observation_space, action_space = self._remotes[0].recv()
         super().__init__(len(environments), observation_space, action_space)
 
-    def seed(self, seed):
+    def seed(self, seed) -> None:
+        """
+
+    :param seed:
+    :return:
+    """
         if isinstance(seed, Sized):
             assert len(seed) == self._num_envs
             for remote, s in zip(self._remotes, seed):
@@ -203,39 +219,70 @@ envs: list of gym environment_utilities to run in subprocesses
             for remote in self._remotes:
                 remote.send(EC(EWC.seed, seed))
 
-    def render(self):
+    @drop_unused_kws
+    def render(self) -> None:
+        """
+
+    :return:
+    """
         for remote in self._remotes:
             remote.send((EWC.render, None))
 
-    def step_async(self, actions):
+    def step_async(self, actions) -> None:
+        """
+
+    :param actions:
+    :return:
+    """
         for remote, action in zip(self._remotes, actions):
             remote.send(EC(EWC.step, action))
         self._waiting = True
 
     def step_wait(self):
+        """
+
+    :return:
+    """
         results = [remote.recv() for remote in self._remotes]
         self._waiting = False
-        obs, signals, terminals, infos = zip(*results)
-        return np.stack(obs), np.stack(signals), np.stack(terminals), infos
+        return results
 
     def reset(self):
+        """
+
+    :return:
+    """
         for remote in self._remotes:
             remote.send(EC(EWC.reset, None))
-        return np.stack([remote.recv() for remote in self._remotes])
+            self._waiting = True
+        res = [remote.recv() for remote in self._remotes]
+        self._waiting = False
+        return res
 
-    def close(self):
+    def close(self) -> None:
+        """
+
+    :return:
+    """
         if self._closed:
             return
         if self._waiting:
             for remote in self._remotes:
-                remote.recv()
+                try:
+                    remote.recv()
+                except (EOFError, ConnectionResetError) as e:
+                    warnings.warn(str(e))
         for remote in self._remotes:
             remote.send(EC(EWC.close, None))
         for p in self._processes:
             p.join()
             self._closed = True
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+
+    :return:
+    """
         return self._num_envs
 
 

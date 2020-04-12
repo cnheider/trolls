@@ -1,6 +1,6 @@
 from multiprocessing import Pipe, Process
 
-import numpy as np
+import numpy
 from experimental import CloudPickleWrapper
 from wrappers.vector_environments import VectorEnvironments
 
@@ -68,17 +68,17 @@ envs: list of gym environments to run in subprocesses
                 remote.send(("render", None))
             self.render_timer = 0
 
-        return np.stack(obs), np.stack(rews), np.stack(dones), info
+        return numpy.stack(obs), numpy.stack(rews), numpy.stack(dones), info
 
     def reset(self):
         for remote in self.remotes:
             remote.send(("reset", None))
-        return np.stack([remote.recv() for remote in self.remotes])
+        return numpy.stack([remote.recv() for remote in self.remotes])
 
     def reset_task(self):
         for remote in self.remotes:
             remote.send(("reset_task", None))
-        return np.stack([remote.recv() for remote in self.remotes])
+        return numpy.stack([remote.recv() for remote in self.remotes])
 
     def close(self):
         if self.closed:

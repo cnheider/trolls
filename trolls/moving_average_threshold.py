@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__author__ = "cnheider"
-from functools import partial
+__author__ = "Christian Heider Nielsen"
 
 
-def ma_threshold(ma, solved_threshold=10):
-    return ma >= solved_threshold
+def ma_stop(solved_threshold: float = 10):
+    """
 
+  :param solved_threshold:
+  :return:
+  """
 
-def ma_stop(solved_threshold=10):
-    return partial(ma_threshold, solved_threshold=solved_threshold)
+    def ma_threshold(ma: float):
+        """
+
+        :param ma:
+        :type ma:
+        :return:
+        :rtype:
+        """
+        return ma >= solved_threshold
+
+    return ma_threshold
 
 
 if __name__ == "__main__":
