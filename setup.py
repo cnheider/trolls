@@ -189,5 +189,5 @@ if __name__ == "__main__":
         long_description=pkg.readme,
         tests_require=pkg.test_dependencies,
         include_package_data=True,
-        python_requires=">=3",
+        python_requires=">=3.6",
     )

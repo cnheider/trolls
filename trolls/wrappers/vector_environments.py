@@ -3,14 +3,16 @@
 import logging
 from abc import ABC, abstractmethod
 
-import numpy
-
 __author__ = "Christian Heider Nielsen"
 
 __all__ = ["VectorEnvironments", "VectorEnvironmentsWrapper", "VectorWrap"]
 
 
 class VectorEnvironments(ABC):
+    """
+
+    """
+
     def __init__(self, num_envs, observation_space, action_space):
         self.num_envs = num_envs
         self.observation_space = observation_space
@@ -50,10 +52,10 @@ already pending.
 Wait for the step taken with step_async().
 
 Returns (obs, rews, dones, info):
- - obs: an array of observations
- - rews: an array of rewards
- - dones: an array of "episode done" booleans
- - info: an array of info objects
+- obs: an array of observations
+- rews: an array of rewards
+- dones: an array of "episode done" booleans
+- info: an array of info objects
 """
         pass
 
@@ -65,14 +67,28 @@ Clean up the environments' resources.
         pass
 
     def step(self, actions):
+        """
+
+        :param actions:
+        :type actions:
+        :return:
+        :rtype:
+        """
         self.step_async(actions)
         return self.step_wait()
 
     def render(self):
+        """
+
+        """
         logging.warning("Render not defined for %s" % self)
 
 
 class VectorEnvironmentsWrapper(VectorEnvironments):
+    """
+
+    """
+
     def __init__(self, venv, observation_space=None, action_space=None):
         self.venv = venv
         VectorEnvironments.__init__(
@@ -83,31 +99,70 @@ class VectorEnvironmentsWrapper(VectorEnvironments):
         )
 
     def step_async(self, actions):
+        """
+
+        :param actions:
+        :type actions:
+        """
         self.venv.step_async(actions)
 
     @abstractmethod
     def reset(self):
+        """
+
+        """
         pass
 
     @abstractmethod
     def step_wait(self):
+        """
+
+        """
         pass
 
     def close(self):
+        """
+
+        :return:
+        :rtype:
+        """
         return self.venv.close()
 
     def render(self):
+        """
+
+        """
         self.venv.render()
 
 
 class VectorWrap:
+    """
+
+    """
+
     def __init__(self, env):
         self.env = env
 
     def react(self, a, *args, **kwargs):
+        """
+
+        :param a:
+        :type a:
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        :return:
+        :rtype:
+        """
         return self.env.react(a[0], *args, **kwargs)
 
     def reset(self):
+        """
+
+        :return:
+        :rtype:
+        """
         return self.env.reset()
 
     def __getattr__(self, item):

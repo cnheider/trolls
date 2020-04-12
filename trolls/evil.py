@@ -7,12 +7,15 @@ __doc__ = r"""
            Created on 02/02/2020
            """
 
-
 if __name__ == "__main__":
 
     import random
 
     class Evil(object):
+        """
+
+    """
+
         def __bool__(self):
             return random.random() > 0.5
 

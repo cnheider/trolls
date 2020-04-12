@@ -13,10 +13,10 @@ __doc__ = r"""
 
 class ActionBonus(gym.core.Wrapper):
     """
-  Wrapper which adds an exploration bonus.
-  This is a reward to encourage exploration of less
-  visited (state,action) pairs.
-  """
+Wrapper which adds an exploration bonus.
+This is a reward to encourage exploration of less
+visited (state,action) pairs.
+"""
 
     def __init__(self, env):
         self.__dict__.update(vars(env))  # Pass values to super wrapper
@@ -49,9 +49,9 @@ class ActionBonus(gym.core.Wrapper):
 
 class StateBonus(gym.core.Wrapper):
     """
-  Adds an exploration bonus based on which positions
-  are visited on the grid.
-  """
+Adds an exploration bonus based on which positions
+are visited on the grid.
+"""
 
     def __init__(self, env):
         self.__dict__.update(vars(env))  # Pass values to super wrapper
