@@ -4,6 +4,8 @@ __author__ = "Christian Heider Nielsen"
 
 import gym
 
+__all__ = ["SkipEnv"]
+
 
 class SkipEnv(gym.Wrapper):
     """Skip timesteps: repeat action, accumulate signal, take last obs."""

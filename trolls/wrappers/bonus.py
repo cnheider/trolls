@@ -9,14 +9,14 @@ __doc__ = r"""
 
            Created on 22/10/2019
            """
+__all__ = ["ActionBonus"]
 
 
 class ActionBonus(gym.core.Wrapper):
     """
-Wrapper which adds an exploration bonus.
-This is a reward to encourage exploration of less
-visited (state,action) pairs.
-"""
+    Wrapper which adds an exploration bonus.
+    This is a reward to encourage exploration of less
+    visited (state,action) pairs."""
 
     def __init__(self, env):
         self.__dict__.update(vars(env))  # Pass values to super wrapper
@@ -24,6 +24,8 @@ visited (state,action) pairs.
         self.counts = {}
 
     def step(self, action):
+        """
+        """
         obs, reward, done, info = self.env.step(action)
 
         env = self.unwrapped
@@ -44,14 +46,15 @@ visited (state,action) pairs.
         return obs, reward, done, info
 
     def reset(self, **kwargs):
+        """
+        """
         return self.env.reset(**kwargs)
 
 
 class StateBonus(gym.core.Wrapper):
     """
-Adds an exploration bonus based on which positions
-are visited on the grid.
-"""
+    Adds an exploration bonus based on which positions
+    are visited on the grid."""
 
     def __init__(self, env):
         self.__dict__.update(vars(env))  # Pass values to super wrapper
@@ -59,6 +62,8 @@ are visited on the grid.
         self.counts = {}
 
     def step(self, action):
+        """
+        """
         obs, reward, done, info = self.env.step(action)
 
         # Tuple based on which we index the counts
@@ -81,4 +86,6 @@ are visited on the grid.
         return obs, reward, done, info
 
     def reset(self, **kwargs):
+        """
+        """
         return self.env.reset(**kwargs)

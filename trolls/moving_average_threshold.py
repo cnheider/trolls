@@ -3,15 +3,16 @@
 
 __author__ = "Christian Heider Nielsen"
 
+__all__ = ["ma_stop"]
 
-def ma_stop(solved_threshold: float = 10):
+
+def ma_stop(solved_threshold: float = 10) -> callable:
     """
 
-  :param solved_threshold:
-  :return:
-  """
+    :param solved_threshold:
+    :return:"""
 
-    def ma_threshold(ma: float):
+    def ma_threshold(ma: float) -> bool:
         """
 
         :param ma:

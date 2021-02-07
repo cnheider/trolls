@@ -11,9 +11,13 @@ import gym
 import numpy
 from gym.spaces import Discrete
 
+__all__ = ["NormalisedActions"]
+
 
 class NormalisedActions(gym.ActionWrapper):
     def reverse_action(self, a):
+        """
+        """
         if isinstance(self.env.action_space, Discrete):
             return a
 
@@ -26,6 +30,8 @@ class NormalisedActions(gym.ActionWrapper):
         return a
 
     def action(self, a):
+        """
+        """
         if isinstance(self.env.action_space, Discrete):
             return a
 
