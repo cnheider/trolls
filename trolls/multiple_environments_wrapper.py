@@ -8,7 +8,7 @@ from collections import namedtuple
 from contextlib import suppress
 from functools import wraps
 from multiprocessing import Pipe, Process
-from typing import Any, Sized
+from typing import Any, Sized, Union
 
 from draugr.stopping import IgnoreInterruptSignal
 import gym
@@ -53,7 +53,7 @@ def make_gym_env(env_nam: str, normalise_actions: bool = True) -> callable:
   """
   """
 
-  @wraps(env_nam)
+  @wraps(gym.make)
   def wrapper() -> gym.Env:
     """
     """
@@ -236,7 +236,7 @@ class SubProcessEnvironments(MultipleEnvironments):
       raise StopIteration('End of Stream')
     super().__init__(len(environments), observation_space, action_space)
 
-  def seed(self, seed) -> None:
+  def seed(self, seed: Union[int, Sized]) -> None:
     """
 
     :param seed:
@@ -313,5 +313,4 @@ class SubProcessEnvironments(MultipleEnvironments):
 
 
 if __name__ == "__main__":
-  envs = [make_gym_env("Pendulum-v0") for _ in range(3)]
-  SubProcessEnvironments(envs)
+  SubProcessEnvironments([make_gym_env("Pendulum-v0") for _ in range(3)])
