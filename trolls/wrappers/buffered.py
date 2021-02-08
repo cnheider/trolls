@@ -23,20 +23,12 @@ class BufferedObsEnv(gym.ObservationWrapper):
      *must* call reset() for init!"""
 
     def __init__(
-        self,
-        env=None,
-        buffer_length=4,
-        skip=4,
-        shape=(84, 84),
-        channel_last=True,
-        maxFrames=True,
+        self, env=None, buffer_length=4, skip=4, shape=(84, 84), channel_last=True, maxFrames=True,
     ):
         super().__init__(env)
         self.obs_shape = shape
 
-        self.obs_buffer = deque(
-            maxlen=2
-        )  # most recent raw observations (for max pooling across time steps)
+        self.obs_buffer = deque(maxlen=2)  # most recent raw observations (for max pooling across time steps)
         self._max_frames = maxFrames
         self.buffer_length = buffer_length
         self.skip = skip
@@ -80,9 +72,7 @@ class BufferedObsEnv(gym.ObservationWrapper):
             max_frame = obs
         intensity_frame = self._rgb2y(max_frame).astype(numpy.uint8)
         small_frame = numpy.array(
-            Image.fromarray(intensity_frame).resize(
-                self.obs_shape, resample=Image.BILINEAR
-            ),
+            Image.fromarray(intensity_frame).resize(self.obs_shape, resample=Image.BILINEAR),
             dtype=numpy.uint8,
         )
         return small_frame

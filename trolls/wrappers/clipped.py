@@ -16,14 +16,8 @@ class ClippedSignalEnv(gym.RewardWrapper):
         self._positive_clip = positive_clip
 
     def _reward(self, signal):
+        new_signal = self._negative_clip if self._positive_clip and signal < self._negative_clip else signal
         new_signal = (
-            self._negative_clip
-            if self._positive_clip and signal < self._negative_clip
-            else signal
-        )
-        new_signal = (
-            self._positive_clip
-            if self._positive_clip and signal > self._positive_clip
-            else new_signal
+            self._positive_clip if self._positive_clip and signal > self._positive_clip else new_signal
         )
         return new_signal
