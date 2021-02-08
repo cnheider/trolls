@@ -89,13 +89,13 @@ __author__ = author
 class TrollsPackage:
     @property
     def test_dependencies(self) -> list:
-        return read_reqs("requirements_tests.txt", Path(__file__).parent)
+        return read_reqs("requirements_tests.txt", Path(__file__).parent/'requirements')
 
     @property
     def setup_dependencies(self) -> list:
         """
         """
-        return read_reqs("requirements_setup.txt", Path(__file__).parent)
+        return read_reqs("requirements_setup.txt", Path(__file__).parent/'requirements')
 
     @property
     def package_name(self) -> str:
@@ -182,23 +182,14 @@ class TrollsPackage:
         """
         these_extras = {
             # 'ExtraName':['package-name; platform_system == "System(Linux,Windows)"'
-        }
+            }
 
-        path: Path = Path(__file__).parent
+        path: Path = Path(__file__).parent / "requirements"
 
         for file in path.iterdir():
             if file.name.startswith("requirements_"):
-
-                requirements_group = []
-                with open(str(file.absolute())) as f:
-                    requirements = f.readlines()
-
-                    for requirement in requirements:
-                        requirements_group.append(requirement.strip())
-
                 group_name_ = "_".join(file.name.strip(".txt").split("_")[1:])
-
-                these_extras[group_name_] = requirements_group
+                these_extras[group_name_] = read_reqs(file.name, path)
 
         all_dependencies = []
 
