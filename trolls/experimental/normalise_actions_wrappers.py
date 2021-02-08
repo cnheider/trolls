@@ -4,6 +4,8 @@ __author__ = "Christian Heider Nielsen"
 
 import gym
 
+__all__ = ["NormaliseActionsWrapper"]
+
 
 class NormaliseActionsWrapper(gym.ActionWrapper):
     """ Wrap action """

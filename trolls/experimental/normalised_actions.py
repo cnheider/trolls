@@ -1,7 +1,9 @@
 import gym
 
+__all__ = ["NormalisedActions"]
 
-class NormalizedActions(gym.ActionWrapper):
+
+class NormalisedActions(gym.ActionWrapper):
     def _action(self, action):
         action = (action + 1) / 2  # [-1, 1] => [0, 1]
         action *= self.action_space.high - self.action_space.low
