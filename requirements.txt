@@ -4,4 +4,4 @@ six
 sorcery
 pytest
 cloudpickle
-draugr
+draugr[drawers]
