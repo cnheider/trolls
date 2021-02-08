@@ -11,8 +11,8 @@ __all__ = ["FrameSkippingWrapper"]
 
 
 class FrameSkippingWrapper(gym.Wrapper):
-    """
-    """
+    """"""
+
     def __init__(self, env, skips):
         super().__init__(env)
         self._skips = skips

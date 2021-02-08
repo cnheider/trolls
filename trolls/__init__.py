@@ -18,6 +18,8 @@ Created on 27/04/2019
 __all__ = ["PROJECT_APP_PATH", "PROJECT_NAME", "PROJECT_VERSION", "get_version"]
 
 from pathlib import Path
+
+
 def dist_is_editable(dist):
     """
     Return True if given Distribution is an editable install."""
@@ -47,8 +49,7 @@ else:
 
 
 def get_version(append_time=DEVELOP):
-    """
-    """
+    """"""
     version = __version__
     if not version:
         version = os.getenv("VERSION", "0.0.0")
@@ -62,11 +63,7 @@ def get_version(append_time=DEVELOP):
             # Most git tags are prefixed with 'v' (example: v1.2.3) this is
             # never desirable for artifact repositories, so we strip the
             # leading 'v' if it's present.
-            version = (
-                version[1:]
-                if isinstance(version, str) and version.startswith("v")
-                else version
-            )
+            version = version[1:] if isinstance(version, str) and version.startswith("v") else version
         else:
             # Default version is an ISO8601 compliant datetime. PyPI doesn't allow
             # the colon ':' character in its versions, and time is required to allow
@@ -78,9 +75,7 @@ def get_version(append_time=DEVELOP):
             #
             # Publications using datetime versions should only be made from master
             # to represent the HEAD moving forward.
-            warn(
-                f"Environment variable VERSION is not set, only using datetime: {date_version}"
-            )
+            warn(f"Environment variable VERSION is not set, only using datetime: {date_version}")
 
             # warn(f'Environment variable VERSION is not set, only using timestamp: {version}')
 

@@ -24,8 +24,7 @@ class ActionBonus(gym.core.Wrapper):
         self.counts = {}
 
     def step(self, action):
-        """
-        """
+        """"""
         obs, reward, done, info = self.env.step(action)
 
         env = self.unwrapped
@@ -46,8 +45,7 @@ class ActionBonus(gym.core.Wrapper):
         return obs, reward, done, info
 
     def reset(self, **kwargs):
-        """
-        """
+        """"""
         return self.env.reset(**kwargs)
 
 
@@ -62,8 +60,7 @@ class StateBonus(gym.core.Wrapper):
         self.counts = {}
 
     def step(self, action):
-        """
-        """
+        """"""
         obs, reward, done, info = self.env.step(action)
 
         # Tuple based on which we index the counts
@@ -86,6 +83,5 @@ class StateBonus(gym.core.Wrapper):
         return obs, reward, done, info
 
     def reset(self, **kwargs):
-        """
-        """
+        """"""
         return self.env.reset(**kwargs)

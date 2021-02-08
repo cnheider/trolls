@@ -21,9 +21,7 @@ class NoisyWrapper(gym.ObservationWrapper):
         :param bottom_margin:"""
         super().__init__(env)
         self.original_shape = env.space.shape
-        new_side = int(
-            round(max(self.original_shape[:-1]) * 100.0 / (100.0 - percent_pad))
-        )
+        new_side = int(round(max(self.original_shape[:-1]) * 100.0 / (100.0 - percent_pad)))
         self.new_shape = [new_side, new_side, 3]
         self.observation_space = Box(0.0, 255.0, self.new_shape)
         self.bottom_margin = bottom_margin
@@ -31,9 +29,9 @@ class NoisyWrapper(gym.ObservationWrapper):
 
     def _observation(self, obs) -> numpy.ndarray:
         im_noise = numpy.random.randint(0, 256, self.new_shape).astype(obs.dtype)
-        im_noise[
-            : self.original_shape[0] - self.bottom_margin, : self.original_shape[1], :
-        ] = obs[: -self.bottom_margin, :, :]
+        im_noise[: self.original_shape[0] - self.bottom_margin, : self.original_shape[1], :] = obs[
+            : -self.bottom_margin, :, :
+        ]
         self.ob = im_noise
         return im_noise
 
