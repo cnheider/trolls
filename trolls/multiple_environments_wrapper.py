@@ -10,7 +10,7 @@ from functools import wraps
 from multiprocessing import Pipe, Process
 from typing import Any, Sized, Union
 
-from draugr.stopping import IgnoreInterruptSignal
+from draugr import IgnoreInterruptSignal
 import gym
 import cloudpickle
 
