@@ -45,13 +45,13 @@ vsmallfont = pygame.font.SysFont("Yu Mincho Demibold", 25)
 
 
 def score(score):
-    """"""
+    """ """
     text = smallfont.render(f"Score: {str(score)}", True, white)
     game_display.blit(text, [0, 0])
 
 
 def text_objects(text, color, size="small"):
-    """"""
+    """ """
     if size == "small":
         text_surface = smallfont.render(text, True, color)
     if size == "medium":
@@ -65,21 +65,21 @@ def text_objects(text, color, size="small"):
 
 
 def text_to_button(msg, color, button_x, button_y, button_width, button_height, size="vsmall"):
-    """"""
+    """ """
     text_surf, text_rect = text_objects(msg, color, size)
     text_rect.center = ((button_x + (button_width / 2)), button_y + (button_height / 2))
     game_display.blit(text_surf, text_rect)
 
 
 def message_to_screen(msg, color, y_displace=0, size="small"):
-    """"""
+    """ """
     text_surf, text_rect = text_objects(msg, color, size)
     text_rect.center = (int(display_width / 2), int(display_height / 2) + y_displace)
     game_display.blit(text_surf, text_rect)
 
 
 def tank(x, y, tur_pos):
-    """"""
+    """ """
     x = int(x)
     y = int(y)
 
@@ -111,7 +111,7 @@ def tank(x, y, tur_pos):
 
 
 def enemy_tank(x, y, tur_pos):
-    """"""
+    """ """
     x = int(x)
     y = int(y)
 
@@ -143,7 +143,7 @@ def enemy_tank(x, y, tur_pos):
 
 
 def game_controls():
-    """"""
+    """ """
     gcont = True
     while gcont:
         for event in pygame.event.get():
@@ -166,7 +166,7 @@ def game_controls():
 
 
 def button(text, x, y, width, height, inactive_color, active_color, action=None, size=" "):
-    """"""
+    """ """
     cur = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + width > cur[0] > x and y + height > cur[1] > y:
@@ -187,7 +187,7 @@ def button(text, x, y, width, height, inactive_color, active_color, action=None,
 
 
 def pause():
-    """"""
+    """ """
     paused = True
     message_to_screen("Paused", white, -100, size="large")
     message_to_screen("Press C to continue playing or Q to quit", wheat, 25)
@@ -207,14 +207,16 @@ def pause():
 
 
 def barrier(x_location, random_height, barrier_width):
-    """"""
+    """ """
     pygame.draw.rect(
-        game_display, green, [x_location, display_height - random_height, barrier_width, random_height],
+        game_display,
+        green,
+        [x_location, display_height - random_height, barrier_width, random_height],
     )
 
 
 def explosion(x, y, size=50):
-    """"""
+    """ """
     explode = True
     while explode:
         for event in pygame.event.get():
@@ -252,7 +254,7 @@ def fire_shell(
     enemy_tank_x,
     enemy_tank_y,
 ):
-    """"""
+    """ """
     fire = True
     damage = 0
     starting_shell = list(xy)
@@ -307,9 +309,18 @@ def fire_shell(
 
 
 def e_fire_shell(
-    xy, tankx, tanky, tur_pos, gun_power, xlocation, barrier_width, random_height, ptankx, ptanky,
+    xy,
+    tankx,
+    tanky,
+    tur_pos,
+    gun_power,
+    xlocation,
+    barrier_width,
+    random_height,
+    ptankx,
+    ptanky,
 ):
-    """"""
+    """ """
     damage = 0
     current_power = 1
     power_found = False
@@ -412,13 +423,13 @@ def e_fire_shell(
 
 
 def power(level):
-    """"""
+    """ """
     text = smallfont.render(f"Power: {str(level)}%", True, wheat)
     game_display.blit(text, [display_width / 2, 0])
 
 
 def game_intro():
-    """"""
+    """ """
     intro = True
     while intro:
         for event in pygame.event.get():
@@ -438,7 +449,15 @@ def game_intro():
         message_to_screen("Welcome to Tanks!", white, -100, size="large")
         button("Play", 150, 500, 100, 50, wheat, light_green, action="play", size="vsmall")
         button(
-            "Controls", 350, 500, 100, 50, wheat, light_yellow, action="controls", size="vsmall",
+            "Controls",
+            350,
+            500,
+            100,
+            50,
+            wheat,
+            light_yellow,
+            action="controls",
+            size="vsmall",
         )
         button("Quit", 550, 500, 100, 50, wheat, light_red, action="quit", size="vsmall")
         pygame.display.update()
@@ -447,7 +466,7 @@ def game_intro():
 
 
 def game_over_call():
-    """"""
+    """ """
     game_over = True
 
     while game_over:
@@ -467,7 +486,7 @@ def game_over_call():
 
 
 def you_win():
-    """"""
+    """ """
     win = True
     while win:
         for event in pygame.event.get():
@@ -486,7 +505,7 @@ def you_win():
 
 
 def health_bars(player_health, enemy_health):
-    """"""
+    """ """
     if player_health > 75:
         player_health_color = green
     elif player_health > 50:
@@ -505,7 +524,7 @@ def health_bars(player_health, enemy_health):
 
 
 def game_loop():
-    """"""
+    """ """
     game_exit = False
     game_over = False
     FPS = 15
@@ -592,7 +611,12 @@ def game_loop():
                             barrier(x_location, random_height, barrier_width)
                             game_display.fill(
                                 green,
-                                rect=[0, display_height - ground_height, display_width, ground_height,],
+                                rect=[
+                                    0,
+                                    display_height - ground_height,
+                                    display_width,
+                                    ground_height,
+                                ],
                             )
                             pygame.display.update()
 
@@ -650,7 +674,8 @@ def game_loop():
         power(fire_power)
         barrier(x_location, random_height, barrier_width)
         game_display.fill(
-            green, rect=[0, display_height - ground_height, display_width, ground_height],
+            green,
+            rect=[0, display_height - ground_height, display_width, ground_height],
         )
         pygame.display.update()
 

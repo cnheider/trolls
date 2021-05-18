@@ -8,4 +8,5 @@ from .clipped import *
 from .noisy import *
 from .normalised import *
 from .skip import *
-from .vector_environments import *
+from .img_obs import *
+from .time_limited import *

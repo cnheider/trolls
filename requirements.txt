@@ -4,4 +4,5 @@ six
 sorcery
 pytest
 cloudpickle
+scikit-image
 draugr[drawers]

@@ -4,16 +4,17 @@ __author__ = "Christian Heider Nielsen"
 
 import logging
 import time
+from typing import Dict, Sequence, Tuple
 
 from gym import Wrapper
 
 _logger = logging.getLogger(__name__)
 
-__all__ = ["TimeLimitedWrapper"]
+__all__ = ["EpisodeLimitedWrapper"]
 
 
-class TimeLimitedWrapper(Wrapper):
-    """"""
+class EpisodeLimitedWrapper(Wrapper):
+    """ """
 
     def __init__(self, env, max_episode_seconds=None, max_episode_steps=None):
         super().__init__(env)
@@ -24,10 +25,10 @@ class TimeLimitedWrapper(Wrapper):
         self._episode_started_at = None
 
     @property
-    def _elapsed_seconds(self):
+    def _elapsed_seconds(self) -> float:
         return time.time() - self._episode_started_at
 
-    def _past_limit(self):
+    def _past_limit(self) -> bool:
         """Return true if we are past our limit"""
         if self._max_episode_steps is not None and self._max_episode_steps <= self._elapsed_steps:
             _logger.debug("Env has passed the step limit defined by TimeLimit.")
@@ -39,7 +40,7 @@ class TimeLimitedWrapper(Wrapper):
 
         return False
 
-    def _step(self, action):
+    def _step(self, action) -> Tuple[Sequence, float, bool, Dict]:
         assert self._episode_started_at is not None, "Cannot call env.step() before calling reset()"
         observation, reward, done, info = self.env.act(action)
         self._elapsed_steps += 1

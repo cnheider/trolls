@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import math
+from typing import Dict, Sequence, Tuple
 
 import gym
 
@@ -18,13 +19,13 @@ class ActionBonus(gym.core.Wrapper):
     This is a reward to encourage exploration of less
     visited (state,action) pairs."""
 
-    def __init__(self, env):
+    def __init__(self, env: gym.Env):
         self.__dict__.update(vars(env))  # Pass values to super wrapper
         super().__init__(env)
         self.counts = {}
 
-    def step(self, action):
-        """"""
+    def step(self, action: Sequence) -> Tuple[Sequence, float, bool, Dict]:
+        """ """
         obs, reward, done, info = self.env.step(action)
 
         env = self.unwrapped
@@ -45,7 +46,7 @@ class ActionBonus(gym.core.Wrapper):
         return obs, reward, done, info
 
     def reset(self, **kwargs):
-        """"""
+        """ """
         return self.env.reset(**kwargs)
 
 
@@ -59,8 +60,8 @@ class StateBonus(gym.core.Wrapper):
         super().__init__(env)
         self.counts = {}
 
-    def step(self, action):
-        """"""
+    def step(self, action: Sequence) -> Tuple[Sequence, float, bool, Dict]:
+        """ """
         obs, reward, done, info = self.env.step(action)
 
         # Tuple based on which we index the counts
@@ -83,5 +84,5 @@ class StateBonus(gym.core.Wrapper):
         return obs, reward, done, info
 
     def reset(self, **kwargs):
-        """"""
+        """ """
         return self.env.reset(**kwargs)

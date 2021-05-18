@@ -15,28 +15,22 @@ __all__ = ["NormalisedActions"]
 
 
 class NormalisedActions(gym.ActionWrapper):
-    def reverse_action(self, a):
-        """"""
+    def reverse_action(self, a: numpy.ndarray) -> numpy.ndarray:
+        """ """
         if isinstance(self.env.action_space, Discrete):
             return a
 
         low = self.env.action_space.low
         high = self.env.action_space.high
-
         a = 2 * (a - low) / (high - low) - 1
-        a = numpy.clip(a, low, high)
+        return numpy.clip(a, low, high)
 
-        return a
-
-    def action(self, a):
-        """"""
+    def action(self, a: numpy.ndarray) -> numpy.ndarray:
+        """ """
         if isinstance(self.env.action_space, Discrete):
             return a
 
         low = self.env.action_space.low
         high = self.env.action_space.high
-
         a = low + (a + 1.0) * 0.5 * (high - low)
-        a = numpy.clip(a, low, high)
-
-        return a
+        return numpy.clip(a, low, high)
