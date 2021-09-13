@@ -18,7 +18,7 @@ class NormalisedActions(gym.ActionWrapper):
     def reverse_action(self, a: numpy.ndarray) -> numpy.ndarray:
         """ """
         if isinstance(self.env.action_space, Discrete):
-            return a
+            return a.item()
 
         low = self.env.action_space.low
         high = self.env.action_space.high
@@ -28,7 +28,7 @@ class NormalisedActions(gym.ActionWrapper):
     def action(self, a: numpy.ndarray) -> numpy.ndarray:
         """ """
         if isinstance(self.env.action_space, Discrete):
-            return a
+            return a.item()
 
         low = self.env.action_space.low
         high = self.env.action_space.high

@@ -12,7 +12,7 @@ if __name__ == "__main__":
     import random
 
     class Evil(object):
-        """"""
+        """ """
 
         def __bool__(self) -> bool:
             return random.random() > 0.5

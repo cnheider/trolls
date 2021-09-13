@@ -38,28 +38,28 @@ turret_width = 5
 wheel_width = 5
 ground_height = 35
 
-smallfont = pygame.font.SysFont("comicsansms", 25)
-medfont = pygame.font.SysFont("comicsansms", 50)
-largefont = pygame.font.SysFont("Yu Mincho Demibold", 85)
-vsmallfont = pygame.font.SysFont("Yu Mincho Demibold", 25)
+small_font = pygame.font.SysFont("comicsansms", 25)
+medium_font = pygame.font.SysFont("comicsansms", 50)
+large_font = pygame.font.SysFont("Yu Mincho Demibold", 85)
+vsmall_font = pygame.font.SysFont("Yu Mincho Demibold", 25)
 
 
-def score(score):
+def score(score_):
     """ """
-    text = smallfont.render(f"Score: {str(score)}", True, white)
+    text = small_font.render(f"Score: {str(score_)}", True, white)
     game_display.blit(text, [0, 0])
 
 
 def text_objects(text, color, size="small"):
     """ """
     if size == "small":
-        text_surface = smallfont.render(text, True, color)
+        text_surface = small_font.render(text, True, color)
     if size == "medium":
-        text_surface = medfont.render(text, True, color)
+        text_surface = medium_font.render(text, True, color)
     if size == "large":
-        text_surface = largefont.render(text, True, color)
+        text_surface = large_font.render(text, True, color)
     if size == "vsmall":
-        text_surface = vsmallfont.render(text, True, color)
+        text_surface = vsmall_font.render(text, True, color)
 
     return text_surface, text_surface.get_rect()
 
@@ -424,7 +424,7 @@ def e_fire_shell(
 
 def power(level):
     """ """
-    text = smallfont.render(f"Power: {str(level)}%", True, wheat)
+    text = small_font.render(f"Power: {str(level)}%", True, wheat)
     game_display.blit(text, [display_width / 2, 0])
 
 
@@ -544,11 +544,11 @@ def game_loop():
     random_height = random.randrange(display_height * 0.1, display_height * 0.6)
 
     while not game_exit:
-        if game_over == True:
+        if game_over:
             message_to_screen("Game Over", red, -50, size="large")
             message_to_screen("Press C to play again or Q to exit", black, 50)
             pygame.display.update()
-            while game_over == True:
+            while game_over:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         game_exit = True
