@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import logging
-from abc import ABC, abstractmethod
 
 __author__ = "Christian Heider Nielsen"
+__doc__ = r"""
+
+           Created on 03-04-2021
+           """
 
 __all__ = ["VectorEnvironments", "VectorEnvironmentsWrapper", "VectorWrap"]
 
+import logging
+from abc import abstractmethod
+from .spaces_mixin import SpacesMixin
 
-class VectorEnvironments(ABC):
-    """"""
 
-    def __init__(self, num_envs, observation_space, action_space):
+class VectorEnvironments(SpacesMixin):
+    """ """
+
+    def __init__(self, num_envs, observation_space, action_space, signal_space):
         self.num_envs = num_envs
-        self.observation_space = observation_space
-        self.action_space = action_space
+        self._observation_space = observation_space
+        self._action_space = action_space
+        self._signal_space = signal_space
 
     """
 An abstract asynchronous, vectorized environment.
@@ -72,12 +79,12 @@ An abstract asynchronous, vectorized environment.
         return self.step_wait()
 
     def render(self):
-        """"""
-        logging.warning("Render not defined for %s" % self)
+        """ """
+        logging.warning(f"Render not defined for {self}")
 
 
 class VectorEnvironmentsWrapper(VectorEnvironments):
-    """"""
+    """ """
 
     def __init__(self, venv, observation_space=None, action_space=None):
         self.venv = venv
@@ -98,12 +105,12 @@ class VectorEnvironmentsWrapper(VectorEnvironments):
 
     @abstractmethod
     def reset(self):
-        """"""
+        """ """
         pass
 
     @abstractmethod
     def step_wait(self):
-        """"""
+        """ """
         pass
 
     def close(self):
@@ -115,12 +122,12 @@ class VectorEnvironmentsWrapper(VectorEnvironments):
         return self.venv.close()
 
     def render(self):
-        """"""
+        """ """
         self.venv.render()
 
 
 class VectorWrap:
-    """"""
+    """ """
 
     def __init__(self, env):
         self.env = env

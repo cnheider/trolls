@@ -1,23 +1,42 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+__author__ = "Christian Heider Nielsen"
+
+__doc__ = r"""
+
+           Created on 03-04-2021
+           """
+
 import enum
 import pickle
+import time
 import warnings
 from collections import namedtuple
 from contextlib import suppress
 from functools import wraps
 from multiprocessing import Pipe, Process
-from typing import Any, Sized, Union
+from multiprocessing.connection import Connection
+from typing import Any, Callable, Optional, Sequence, Tuple, Union
 
-from draugr import IgnoreInterruptSignal
-import gym
 import cloudpickle
+import gym
+import numpy
+from skimage.transform import resize
+from warg import Number, drop_unused_kws
 
-__author__ = "Christian Heider Nielsen"
-
-from trolls.wrappers import NormalisedActions
-from warg import drop_unused_kws
+from trolls.gym_wrappers import NormalisedActions
+from trolls.gym_wrappers.space import SpaceWrapper
+from trolls.render_mode import RenderModeEnum
+from trolls.spaces import (
+    ActionSpace,
+    ObservationSpace,
+    SSSS,
+    VectorActionSpace,
+    VectorObservationSpace,
+    VectorSignalSpace,
+)
+from trolls.spaces_mixin import SpacesMixin
 
 __all__ = [
     "EnvironmentWorkerCommands",
@@ -30,7 +49,7 @@ __all__ = [
 
 
 class EnvironmentWorkerCommands(enum.Enum):
-    """"""
+    """ """
 
     step = enum.auto()
     reset = enum.auto()
@@ -49,22 +68,37 @@ EC = EnvironmentCommand
 GymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "info"))
 
 
+class ItemizeNumpy(gym.Wrapper):
+    def step(self, action: Union[numpy.ndarray, Number]):
+
+        if isinstance(action, (numpy.ndarray, numpy.generic)):
+            return super().step(action.item())
+        # if isinstance(action, numpy.generic):
+        #  return numpy.asscalar(action)
+        return super().step(action)
+
+
 def make_gym_env(env_nam: str, normalise_actions: bool = True) -> callable:
-    """"""
+    """ """
 
     @wraps(gym.make)
-    def wrapper() -> gym.Env:
-        """"""
+    def wrapper() -> SpaceWrapper:
+        """ """
         env = gym.make(env_nam)
         if normalise_actions:
             env = NormalisedActions(env)
-        return env
+
+        return SpaceWrapper(env)
 
     return wrapper
 
 
 def environment_worker(
-    remote, parent_remote, env_fn_wrapper: callable, auto_reset_on_terminal: bool = False,
+    remote: Connection,
+    parent_remote: Connection,
+    env_fn_wrapper: callable,
+    auto_reset_on_terminal: bool = False,
+    render_obs_size_tuple: Optional[Tuple[int, int]] = None,  # (128, 128)
 ):
     """
 
@@ -72,6 +106,7 @@ def environment_worker(
     :param parent_remote:
     :param env_fn_wrapper:
     :param auto_reset_on_terminal:
+    :param render_obs_size_tuple:
     :return:"""
     warnings.simplefilter("ignore")
     # with IgnoreInterruptSignal(): # TODO: DOES NOT WORK AS intended here, endless looping, needs another way to send a close signal
@@ -80,6 +115,7 @@ def environment_worker(
         env = env_fn_wrapper.x()
         terminated = False
         while True:
+
             cmd, data = remote.recv()
             if cmd is EWC.step:
                 observation, signal, terminal, info = env.step(data)
@@ -96,39 +132,49 @@ def environment_worker(
                 terminated = False
                 remote.send(observation)
             elif cmd is EWC.close:
-                remote.close()
+                env.close()
+                # remote.send(None)
                 break
             elif cmd is EWC.get_spaces:
                 remote.send((env.observation_space, env.action_space))
             elif cmd is EWC.render:
-                env.render()
+                res = env.render(data)
+                if data != RenderModeEnum.human.value:
+                    if render_obs_size_tuple:
+                        res = resize(res, render_obs_size_tuple)  # VERY SLOW!!!
+                    remote.send(res)
             elif cmd is EWC.seed:
                 env.seed(data)
             else:
                 raise NotImplementedError
 
 
-class MultipleEnvironments(gym.Env):
+class MultipleEnvironments(gym.Env, SpacesMixin):
     """
     An abstract asynchronous, vectorized environment."""
 
     def render(self, mode="human"):
-        """"""
+        """ """
         pass
 
-    def __init__(self, num_envs, observation_space, action_space):
-        self._num_envs = num_envs
-        self._observation_space = observation_space
-        self._action_space = action_space
+    def __init__(self, num_environments: int, observation_space: ObservationSpace, action_space: ActionSpace):
+        self._num_environments = num_environments
+        self._observation_space = VectorObservationSpace(observation_space, num_environments)
+        self._action_space = VectorActionSpace(action_space, num_environments)
+        self._signal_space = VectorSignalSpace(SSSS(), self._num_environments)
 
     @property
-    def observation_space(self):
-        """"""
+    def signal_space(self) -> VectorSignalSpace:
+        return self._signal_space
+
+    @property
+    def observation_space(self) -> VectorObservationSpace:
+        """ """
         return self._observation_space
 
     @property
-    def action_space(self):
-        """"""
+    def action_space(self) -> VectorActionSpace:
+        """ """
         return self._action_space
 
     def reset(self):
@@ -166,7 +212,7 @@ class MultipleEnvironments(gym.Env):
         raise NotImplementedError
 
     def step(self, actions):
-        """"""
+        """ """
         self.step_async(actions)
         return self.step_wait()
 
@@ -187,19 +233,24 @@ class CloudPickleBase(object):
 
 
 class SubProcessEnvironments(MultipleEnvironments):
-    """"""
+    """ """
 
-    def __init__(self, environments, auto_reset_on_terminal_state: bool = False):
+    def __init__(self, environments: Sequence[Callable], auto_reset_on_terminal_state: bool = False):
         """
-        envs: list of gym environment_utilities to run in subprocesses"""
+        environments: list of gym environment_utilities to run in subprocesses"""
         self._waiting = False
         self._closed = False
-        self._num_envs = len(environments)
-        self._remotes, self._work_remotes = zip(*[Pipe() for _ in range(self._num_envs)])
+        self._num_environments = len(environments)
+        self._remotes, self._work_remotes = zip(*[Pipe() for _ in range(self._num_environments)])
         self._processes = [
             Process(
                 target=environment_worker,
-                args=(work_remote, remote, CloudPickleBase(env), auto_reset_on_terminal_state,),
+                args=(
+                    work_remote,
+                    remote,
+                    CloudPickleBase(env),
+                    auto_reset_on_terminal_state,
+                ),
             )
             for (work_remote, remote, env) in zip(self._work_remotes, self._remotes, environments)
         ]
@@ -212,17 +263,19 @@ class SubProcessEnvironments(MultipleEnvironments):
         self._remotes[0].send(EC(EWC.get_spaces, None))
         try:
             observation_space, action_space = self._remotes[0].recv()
-        except EOFError:
-            raise StopIteration("End of Stream")
+        except EOFError as e:
+            raise StopIteration(f"End of Stream, {e}")
+
         super().__init__(len(environments), observation_space, action_space)
 
-    def seed(self, seed: Union[int, Sized]) -> None:
+    # noinspection PyMethodOverriding
+    def seed(self, seed: Union[int, Sequence]) -> None:
         """
 
         :param seed:
         :return:"""
-        if isinstance(seed, Sized):
-            assert len(seed) == self._num_envs
+        if isinstance(seed, Sequence):
+            assert len(seed) == self._num_environments
             for remote, s in zip(self._remotes, seed):
                 remote.send(EC(EWC.seed, s))
         else:
@@ -230,12 +283,30 @@ class SubProcessEnvironments(MultipleEnvironments):
                 remote.send(EC(EWC.seed, seed))
 
     @drop_unused_kws
-    def render(self) -> None:
+    def render(
+        self, render_mode: Union[RenderModeEnum, str] = RenderModeEnum.human, only_render_single: bool = True
+    ) -> Optional[Sequence]:
         """
 
         :return:"""
-        for remote in self._remotes:
-            remote.send((EWC.render, None))
+        if isinstance(render_mode, RenderModeEnum):
+            render_mode_str = render_mode.value
+        else:
+            render_mode_str = render_mode
+            render_mode = RenderModeEnum(render_mode)
+
+        remotes = self._remotes
+        if only_render_single:
+            remotes = remotes[:1]
+
+        for remote in remotes:
+            remote.send(EC(EWC.render, render_mode_str))
+
+        if render_mode != RenderModeEnum.none and render_mode != RenderModeEnum.human:
+            self._waiting = True
+            res = [remote.recv() for remote in remotes]
+            self._waiting = False
+            return res
 
     def step_async(self, actions) -> None:
         """
@@ -262,7 +333,7 @@ class SubProcessEnvironments(MultipleEnvironments):
         :return:"""
         for remote in self._remotes:
             remote.send(EC(EWC.reset, None))
-            self._waiting = True
+        self._waiting = True
         res = [remote.recv() for remote in self._remotes]
         self._waiting = False
         return res
@@ -277,20 +348,33 @@ class SubProcessEnvironments(MultipleEnvironments):
             for remote in self._remotes:
                 try:
                     remote.recv()
-                except (EOFError, ConnectionResetError) as e:
+                except (EOFError, ConnectionResetError, BrokenPipeError) as e:
                     warnings.warn(str(e))
         for remote in self._remotes:
             remote.send(EC(EWC.close, None))
         for p in self._processes:
             p.join()
+            p.close()
             self._closed = True
 
     def __len__(self) -> int:
         """
 
         :return:"""
-        return self._num_envs
+        return self._num_environments
 
 
 if __name__ == "__main__":
-    SubProcessEnvironments([make_gym_env("Pendulum-v0") for _ in range(3)])
+
+    def asidj():
+        env = SubProcessEnvironments([make_gym_env("Pendulum-v0") for _ in range(3)])
+        env.reset()
+        for i in range(10):
+            vector_action = env.action_space.sample()
+            env.step(vector_action)
+            env.render()
+
+        env.close()
+        time.sleep(1)
+
+    asidj()

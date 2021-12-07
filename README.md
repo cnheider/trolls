@@ -13,7 +13,9 @@
 |---|---|---|---|---|
 
 ___
-> Hidden monsters
+> Hidden monsters, and ugly beasts
 ___
 
 ![python](.github/images/python.svg)
+
+This package is quite dirty wrappers around existing Agent-Environment Feedback(state, action, signal) Loop environments. The goal being unification of interfaces, syntax and parallelisation.
