@@ -9,7 +9,7 @@ from apppath.app_path import AppPath
 
 __project__ = "Trolls"
 __author__ = "Christian Heider Nielsen"
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 __doc__ = r"""
 Created on 27/04/2019
 
