@@ -1,14 +1,14 @@
 from multiprocessing import Pipe, Process
 
 import numpy
-from experimental import CloudPickleWrapper
-from wrappers.vector_environments import VectorEnvironments
+from . import CloudPickleWrapper
+from trolls.vector_environments import VectorEnvironments
 
 __all__ = ["SubProcessVectorEnvironments"]
 
 
 def worker(remote, parent_remote, env_fn_wrapper):
-    """"""
+    """ """
     parent_remote.close()
     env = env_fn_wrapper.x()
     while True:
@@ -36,7 +36,7 @@ def worker(remote, parent_remote, env_fn_wrapper):
 
 
 class SubProcessVectorEnvironments(VectorEnvironments):
-    """"""
+    """ """
 
     def __init__(self, env_fns, render_interval):
         """Minor addition to SubprocVecEnv, automatically renders environments
@@ -61,7 +61,7 @@ class SubProcessVectorEnvironments(VectorEnvironments):
         self.render_timer = 0
 
     def step(self, actions):
-        """"""
+        """ """
         for remote, action in zip(self.remotes, actions):
             remote.send(("step", action))
         results = [remote.recv() for remote in self.remotes]
@@ -76,19 +76,19 @@ class SubProcessVectorEnvironments(VectorEnvironments):
         return numpy.stack(obs), numpy.stack(rews), numpy.stack(dones), info
 
     def reset(self):
-        """"""
+        """ """
         for remote in self.remotes:
             remote.send(("reset", None))
         return numpy.stack([remote.recv() for remote in self.remotes])
 
     def reset_task(self):
-        """"""
+        """ """
         for remote in self.remotes:
             remote.send(("reset_task", None))
         return numpy.stack([remote.recv() for remote in self.remotes])
 
     def close(self):
-        """"""
+        """ """
         if self.closed:
             return
 
@@ -100,5 +100,5 @@ class SubProcessVectorEnvironments(VectorEnvironments):
 
     @property
     def num_envs(self):
-        """"""
+        """ """
         return len(self.remotes)

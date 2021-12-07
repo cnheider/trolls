@@ -8,11 +8,12 @@ import gym
 import numpy
 from PIL import Image
 from gym.spaces.box import Box
+from typing import Dict, Sequence, Tuple
 
-__all__ = ["BufferedObsEnv"]
+__all__ = ["BufferedObservations"]
 
 
-class BufferedObsEnv(gym.ObservationWrapper):
+class BufferedObservations(gym.ObservationWrapper):
     """Buffer observations and stack e.g. for frame skipping.
 
     n is the length of the buffer, and number of observations stacked.
@@ -23,7 +24,13 @@ class BufferedObsEnv(gym.ObservationWrapper):
      *must* call reset() for init!"""
 
     def __init__(
-        self, env=None, buffer_length=4, skip=4, shape=(84, 84), channel_last=True, maxFrames=True,
+        self,
+        env=None,
+        buffer_length=4,
+        skip=4,
+        shape=(84, 84),
+        channel_last=True,
+        maxFrames=True,
     ):
         super().__init__(env)
         self.obs_shape = shape
@@ -40,11 +47,11 @@ class BufferedObsEnv(gym.ObservationWrapper):
         self.scale = 1.0 / 255
         self.observation_space.high[...] = 1.0
 
-    def _step(self, action):
+    def _step(self, action: numpy.ndarray) -> Tuple[Sequence, float, bool, Dict]:
         obs, signal, terminal, info = self.env.act(action)
         return self._observation(obs), signal, terminal, info
 
-    def _observation(self, obs):
+    def _observation(self, obs: numpy.ndarray) -> numpy.ndarray:
         obs = self._convert(obs)
         self.counter += 1
         if self.counter % self.skip == 0:

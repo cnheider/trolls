@@ -76,7 +76,7 @@ class VecEnv(ABC):
 
     @property
     def unwrapped(self):
-        """"""
+        """ """
         if isinstance(self, VecEnvWrapper):
             return self.venv.unwrapped
         else:
@@ -100,29 +100,29 @@ class VecEnvWrapper(VecEnv):
         )
 
     def step_async(self, actions):
-        """"""
+        """ """
         self.venv.step_async(actions)
 
     @abstractmethod
     def reset(self):
-        """"""
+        """ """
         pass
 
     @abstractmethod
     def step_wait(self):
-        """"""
+        """ """
         pass
 
     def close(self):
-        """"""
+        """ """
         return self.venv.close()
 
     def render(self, *args, **kwargs):
-        """"""
+        """ """
         return self.venv.render()
 
     def get_images(self):
-        """"""
+        """ """
         return self.venv.get_images()
 
 
@@ -130,7 +130,7 @@ import numpy
 
 
 class RunningMeanStd(object):
-    """"""
+    """ """
 
     def __init__(self, epsilon=1e-4, shape=()):
         """
@@ -143,14 +143,14 @@ class RunningMeanStd(object):
         self.count = epsilon
 
     def update(self, arr):
-        """"""
+        """ """
         batch_mean = numpy.mean(arr, axis=0)
         batch_var = numpy.var(arr, axis=0)
         batch_count = arr.shape[0]
         self.update_from_moments(batch_mean, batch_var, batch_count)
 
     def update_from_moments(self, batch_mean, batch_var, batch_count):
-        """"""
+        """ """
         delta = batch_mean - self.mean
         tot_count = self.count + batch_count
 
@@ -220,7 +220,9 @@ class VecNormalize(VecEnvWrapper):
             if self.training:
                 self.ret_rms.update(self.ret)
             rews = numpy.clip(
-                rews / numpy.sqrt(self.ret_rms.var + self.epsilon), -self.clip_reward, self.clip_reward,
+                rews / numpy.sqrt(self.ret_rms.var + self.epsilon),
+                -self.clip_reward,
+                self.clip_reward,
             )
         self.ret[news] = 0
         return obs, rews, news, infos

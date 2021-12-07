@@ -2,17 +2,22 @@
 # -*- coding: utf-8 -*-
 
 __author__ = "Christian Heider Nielsen"
+__doc__ = r"""
 
+           Created on 03-04-2021
+           """
 __all__ = ["ma_stop"]
 
+from warg import Number
 
-def ma_stop(solved_threshold: float = 10) -> callable:
+
+def ma_stop(solved_threshold: Number = 10) -> callable:
     """
 
     :param solved_threshold:
     :return:"""
 
-    def ma_threshold(ma: float) -> bool:
+    def ma_threshold(ma: Number) -> bool:
         """
 
         :param ma:
