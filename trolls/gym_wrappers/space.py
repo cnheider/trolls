@@ -7,11 +7,9 @@ __doc__ = r"""
            Created on 10-05-2021
            """
 
-from typing import Iterable, List
+from typing import List
 
 import gym
-from gym.spaces import Box
-
 from trolls.spaces import ActionSpace, ObservationSpace, Range, SignalSpace
 from trolls.spaces_mixin import SpacesMixin
 

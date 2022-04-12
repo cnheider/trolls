@@ -1,6 +1,6 @@
-import pickle as pk
+import pickle
 
-import cloudpickle as cpk
+import cloudpickle
 
 __all__ = ["CloudPickleWrapper"]
 
@@ -13,7 +13,7 @@ class CloudPickleWrapper(object):
         self.x = x
 
     def __getstate__(self):
-        return cpk.dumps(self.x)
+        return cloudpickle.dumps(self.x)
 
     def __setstate__(self, ob):
-        self.x = pk.loads(ob)
+        self.x = pickle.loads(ob)

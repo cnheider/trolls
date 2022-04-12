@@ -1,8 +1,9 @@
 from multiprocessing import Pipe, Process
 
 import numpy
-from . import CloudPickleWrapper
 from trolls.vector_environments import VectorEnvironments
+
+from . import CloudPickleWrapper
 
 __all__ = ["SubProcessVectorEnvironments"]
 

@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = "Christian Heider Nielsen"
 
-
 import logging
-
 from typing import Dict, Sequence, Tuple
 
 from gym import Wrapper

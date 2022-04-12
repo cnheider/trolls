@@ -216,6 +216,7 @@ from sphinx.util.docfields import TypedField
 
 def patched_make_field(self, types, domain, items, **kw):
     """ """
+
     # `kw` catches `env=None` needed for newer sphinx while maintaining
     #  backwards compatibility when passed along further down!
     # #type: (List, unicode, Tuple) -> nodes.field

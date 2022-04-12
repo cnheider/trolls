@@ -8,7 +8,6 @@ __doc__ = r"""
            """
 
 if __name__ == "__main__":
-
     import random
 
     class Evil(object):

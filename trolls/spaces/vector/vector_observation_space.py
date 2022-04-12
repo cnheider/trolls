@@ -9,7 +9,6 @@ __doc__ = r"""
 
 from trolls.spaces import ObservationSpace
 
-
 __all__ = ["VectorObservationSpace"]
 
 

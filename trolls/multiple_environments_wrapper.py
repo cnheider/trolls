@@ -23,8 +23,6 @@ import cloudpickle
 import gym
 import numpy
 from skimage.transform import resize
-from warg import Number, drop_unused_kws
-
 from trolls.gym_wrappers import NormalisedActions
 from trolls.gym_wrappers.space import SpaceWrapper
 from trolls.render_mode import RenderModeEnum
@@ -37,6 +35,7 @@ from trolls.spaces import (
     VectorSignalSpace,
 )
 from trolls.spaces_mixin import SpacesMixin
+from warg import Number, drop_unused_kws
 
 __all__ = [
     "EnvironmentWorkerCommands",
@@ -70,7 +69,6 @@ GymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "info"))
 
 class ItemizeNumpy(gym.Wrapper):
     def step(self, action: Union[numpy.ndarray, Number]):
-
         if isinstance(action, (numpy.ndarray, numpy.generic)):
             return super().step(action.item())
         # if isinstance(action, numpy.generic):

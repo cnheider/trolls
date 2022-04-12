@@ -3,12 +3,12 @@
 __author__ = "Christian Heider Nielsen"
 
 from collections import deque
+from typing import Dict, Sequence, Tuple
 
 import gym
 import numpy
 from PIL import Image
 from gym.spaces.box import Box
-from typing import Dict, Sequence, Tuple
 
 __all__ = ["BufferedObservations"]
 
