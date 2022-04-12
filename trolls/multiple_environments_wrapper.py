@@ -157,7 +157,12 @@ class MultipleEnvironments(gym.Env, SpacesMixin):
         """ """
         pass
 
-    def __init__(self, num_environments: int, observation_space: ObservationSpace, action_space: ActionSpace):
+    def __init__(
+        self,
+        num_environments: int,
+        observation_space: ObservationSpace,
+        action_space: ActionSpace,
+    ):
         self._num_environments = num_environments
         self._observation_space = VectorObservationSpace(observation_space, num_environments)
         self._action_space = VectorActionSpace(action_space, num_environments)
@@ -235,7 +240,11 @@ class CloudPickleBase(object):
 class SubProcessEnvironments(MultipleEnvironments):
     """ """
 
-    def __init__(self, environments: Sequence[Callable], auto_reset_on_terminal_state: bool = False):
+    def __init__(
+        self,
+        environments: Sequence[Callable],
+        auto_reset_on_terminal_state: bool = False,
+    ):
         """
         environments: list of gym environment_utilities to run in subprocesses"""
         self._waiting = False
@@ -284,7 +293,9 @@ class SubProcessEnvironments(MultipleEnvironments):
 
     @drop_unused_kws
     def render(
-        self, render_mode: Union[RenderModeEnum, str] = RenderModeEnum.human, only_render_single: bool = True
+        self,
+        render_mode: Union[RenderModeEnum, str] = RenderModeEnum.human,
+        only_render_single: bool = True,
     ) -> Optional[Sequence]:
         """
 
