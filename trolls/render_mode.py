@@ -14,9 +14,22 @@ class RenderModeEnum(enum.Enum):
     """Common render modes"""
 
     none = "none"
+    """no render"""
+
     human = "human"
-    to_screen = "human"  # to_screen
+    """to_screen"""
+
+    to_screen = "human"
+    """to_screen"""
+
     rgb_array = "rgb_array"
+    """to_array"""
+
     depth_array = "depth_array"
-    segmentation_array = "segmentation_array"  # categories
+    """to_array"""
+
+    segmentation_array = "segmentation_array"
+    """to_array in categories"""
+
     ansi = "ansi"
+    """to_text_array"""

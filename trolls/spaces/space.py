@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import functools
+
+# SpaceType = TypeVar("Space", bound=Space)
+from typing import Iterable
 from typing import List, Tuple, Generator, Sequence
 
 import numpy
 
-from trolls.spaces.range import Range
-
 # from typing import Type, TypeVar, Union,
 from warg import Number, cached_property
 
-# SpaceType = TypeVar("Space", bound=Space)
-from typing import Iterable
-
+from trolls.spaces.dimension import Dimension
 
 __author__ = "Christian Heider Nielsen"
 
@@ -22,7 +21,7 @@ __all__ = ["Space"]
 class Space(object):
     """ """
 
-    def __init__(self, ranges: Sequence[Range], names: Iterable[str] = ()):
+    def __init__(self, ranges: Sequence[Dimension], names: Iterable[str] = ()):
         """
 
         :param ranges:
@@ -110,7 +109,7 @@ class Space(object):
         return self.low
 
     @cached_property
-    def ranges(self) -> Iterable[Range]:
+    def ranges(self) -> Iterable[Dimension]:
         """
 
         :return:"""
@@ -259,5 +258,5 @@ class Space(object):
 
 
 if __name__ == "__main__":
-    acs = Space([Range()], ["a"])
+    acs = Space([Dimension()], ["a"])
     print(acs, acs.decimal_granularity, acs.shape, acs.span)

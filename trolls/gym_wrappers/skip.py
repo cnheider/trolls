@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 __author__ = "Christian Heider Nielsen"
 
-import gym
 from typing import Any, Dict, Sequence, Tuple
+
+import gym
 
 __all__ = ["SkipRepeatAccumulateLast"]
 

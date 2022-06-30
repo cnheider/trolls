@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from typing import Sequence
 
-from trolls.spaces.range import Range
+from trolls.spaces.dimension import Dimension
 from trolls.spaces.space import Space
 
 __author__ = "Christian Heider Nielsen"
@@ -22,5 +22,5 @@ class ObservationSpace(Space):
 
 
 if __name__ == "__main__":
-    acs = ObservationSpace([Range()], ())
+    acs = ObservationSpace([Dimension()], ())
     print(acs)

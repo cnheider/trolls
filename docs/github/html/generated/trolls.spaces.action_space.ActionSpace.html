@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>trolls.spaces.action_space.ActionSpace &#8212; trolls 0.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="canonical" href="sintefneodroid.github.io/trolls/generated/trolls.spaces.action_space.ActionSpace.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="trolls.spaces.dimension" href="trolls.spaces.dimension.html" />
+    <link rel="prev" title="trolls.spaces.action_space" href="trolls.spaces.action_space.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="trolls-spaces-action-space-actionspace">
+<h1>trolls.spaces.action_space.ActionSpace<a class="headerlink" href="#trolls-spaces-action-space-actionspace" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">trolls.spaces.action_space.</span></span><span class="sig-name descname"><span class="pre">ActionSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="trolls.spaces.dimension.Dimension.html#trolls.spaces.dimension.Dimension" title="trolls.spaces.dimension.Dimension"><span class="pre">Dimension</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/trolls/spaces/action_space.html#ActionSpace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="trolls.spaces.space.Space.html#trolls.spaces.space.Space" title="trolls.spaces.space.Space"><code class="xref py py-class docutils literal notranslate"><span class="pre">Space</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="trolls.spaces.dimension.Dimension.html#trolls.spaces.dimension.Dimension" title="trolls.spaces.dimension.Dimension"><span class="pre">Dimension</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ranges</strong> – </p></li>
+<li><p><strong>names</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.__init__" title="trolls.spaces.action_space.ActionSpace.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(ranges[, names])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param ranges</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.clip" title="trolls.spaces.action_space.ActionSpace.clip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clip</span></code></a>(values)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param values</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.discrete_one_hot_sample" title="trolls.spaces.action_space.ActionSpace.discrete_one_hot_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discrete_one_hot_sample</span></code></a>()</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.one_hot_sample" title="trolls.spaces.action_space.ActionSpace.one_hot_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">one_hot_sample</span></code></a>()</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.project" title="trolls.spaces.action_space.ActionSpace.project"><code class="xref py py-obj docutils literal notranslate"><span class="pre">project</span></code></a>(a)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param a</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.reproject" title="trolls.spaces.action_space.ActionSpace.reproject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reproject</span></code></a>(a)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param a</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.validate" title="trolls.spaces.action_space.ActionSpace.validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code></a>(actions)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param actions</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.continuous_shape" title="trolls.spaces.action_space.ActionSpace.continuous_shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">continuous_shape</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.decimal_granularity" title="trolls.spaces.action_space.ActionSpace.decimal_granularity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decimal_granularity</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.discrete_steps" title="trolls.spaces.action_space.ActionSpace.discrete_steps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discrete_steps</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.discrete_steps_shape" title="trolls.spaces.action_space.ActionSpace.discrete_steps_shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discrete_steps_shape</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.high" title="trolls.spaces.action_space.ActionSpace.high"><code class="xref py py-obj docutils literal notranslate"><span class="pre">high</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.is_01normalised" title="trolls.spaces.action_space.ActionSpace.is_01normalised"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_01normalised</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.is_continuous" title="trolls.spaces.action_space.ActionSpace.is_continuous"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_continuous</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.is_discrete" title="trolls.spaces.action_space.ActionSpace.is_discrete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_discrete</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.is_mixed" title="trolls.spaces.action_space.ActionSpace.is_mixed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_mixed</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.is_singular" title="trolls.spaces.action_space.ActionSpace.is_singular"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_singular</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.is_singular_discrete" title="trolls.spaces.action_space.ActionSpace.is_singular_discrete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_singular_discrete</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.low" title="trolls.spaces.action_space.ActionSpace.low"><code class="xref py py-obj docutils literal notranslate"><span class="pre">low</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.max" title="trolls.spaces.action_space.ActionSpace.max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.min" title="trolls.spaces.action_space.ActionSpace.min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.n" title="trolls.spaces.action_space.ActionSpace.n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.num_actuators" title="trolls.spaces.action_space.ActionSpace.num_actuators"><code class="xref py py-obj docutils literal notranslate"><span class="pre">num_actuators</span></code></a></p></td>
+<td><p>return: :rtype:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.ranges" title="trolls.spaces.action_space.ActionSpace.ranges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ranges</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.shape" title="trolls.spaces.action_space.ActionSpace.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#trolls.spaces.action_space.ActionSpace.span" title="trolls.spaces.action_space.ActionSpace.span"><code class="xref py py-obj docutils literal notranslate"><span class="pre">span</span></code></a></p></td>
+<td><p>return:</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.clip">
+<span class="sig-name descname"><span class="pre">clip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.clip" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.continuous_shape">
+<span class="sig-name descname"><span class="pre">continuous_shape</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.continuous_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.decimal_granularity">
+<span class="sig-name descname"><span class="pre">decimal_granularity</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.decimal_granularity" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.discrete_one_hot_sample">
+<span class="sig-name descname"><span class="pre">discrete_one_hot_sample</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/trolls/spaces/action_space.html#ActionSpace.discrete_one_hot_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.discrete_one_hot_sample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.discrete_steps">
+<span class="sig-name descname"><span class="pre">discrete_steps</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.discrete_steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.discrete_steps_shape">
+<span class="sig-name descname"><span class="pre">discrete_steps_shape</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.discrete_steps_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.high">
+<span class="sig-name descname"><span class="pre">high</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.high" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.is_01normalised">
+<span class="sig-name descname"><span class="pre">is_01normalised</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.is_01normalised" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.is_continuous">
+<span class="sig-name descname"><span class="pre">is_continuous</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.is_continuous" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.is_discrete">
+<span class="sig-name descname"><span class="pre">is_discrete</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.is_discrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.is_mixed">
+<span class="sig-name descname"><span class="pre">is_mixed</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.is_mixed" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.is_singular">
+<span class="sig-name descname"><span class="pre">is_singular</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.is_singular" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.is_singular_discrete">
+<span class="sig-name descname"><span class="pre">is_singular_discrete</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.is_singular_discrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.low">
+<span class="sig-name descname"><span class="pre">low</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.low" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.max">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.min">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.n">
+<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.n" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.num_actuators">
+<span class="sig-name descname"><span class="pre">num_actuators</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.num_actuators" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:
+:rtype:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.one_hot_sample">
+<span class="sig-name descname"><span class="pre">one_hot_sample</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/trolls/spaces/action_space.html#ActionSpace.one_hot_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.one_hot_sample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.project">
+<span class="sig-name descname"><span class="pre">project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.project" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.ranges">
+<span class="sig-name descname"><span class="pre">ranges</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.reproject">
+<span class="sig-name descname"><span class="pre">reproject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.reproject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.span">
+<span class="sig-name descname"><span class="pre">span</span></span><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.span" title="Permalink to this definition">¶</a></dt>
+<dd><p>return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trolls.spaces.action_space.ActionSpace.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/trolls/spaces/action_space.html#ActionSpace.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trolls.spaces.action_space.ActionSpace.validate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>actions</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">trolls</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="trolls.html">trolls</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="trolls.get_version.html">trolls.get_version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trolls.gym_wrappers.html">trolls.gym_wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trolls.moving_average_threshold.html">trolls.moving_average_threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trolls.multiple_environments_wrapper.html">trolls.multiple_environments_wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trolls.render_mode.html">trolls.render_mode</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="trolls.spaces.html">trolls.spaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="trolls.spaces.action_space.html">trolls.spaces.action_space</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">trolls.spaces.action_space.ActionSpace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trolls.spaces.dimension.html">trolls.spaces.dimension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trolls.spaces.observation_space.html">trolls.spaces.observation_space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trolls.spaces.signal_space.html">trolls.spaces.signal_space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trolls.spaces.space.html">trolls.spaces.space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trolls.spaces.vector.html">trolls.spaces.vector</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trolls.spaces_mixin.html">trolls.spaces_mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trolls.vector_environments.html">trolls.vector_environments</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="trolls.html">trolls</a><ul>
+  <li><a href="trolls.spaces.html">trolls.spaces</a><ul>
+  <li><a href="trolls.spaces.action_space.html">trolls.spaces.action_space</a><ul>
+      <li>Previous: <a href="trolls.spaces.action_space.html" title="previous chapter">trolls.spaces.action_space</a></li>
+      <li>Next: <a href="trolls.spaces.dimension.html" title="next chapter">trolls.spaces.dimension</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/generated/trolls.spaces.action_space.ActionSpace.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

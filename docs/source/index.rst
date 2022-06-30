@@ -1,14 +1,28 @@
-.. trolls documentation master file, created by
-sphinx-quickstart on Wed Aug 28 12:59:43 2019.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive.
+|project| Documentation
+===============================
 
-Welcome to trolls's documentation!
-==================================
+Version: |version| |today|
+
+
+..  autosummary::
+    :toctree: generated
+    :template: custom_autosummary/module.rst
+    :recursive:
+
+    trolls
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :glob:
+    :hidden:
+    :maxdepth: 1
+    :caption: Notes
+
+    getting_started
+
+What's next?
+-------------
+
+Read the :ref:`Getting Started Guide <getting_started>`
 
 
 

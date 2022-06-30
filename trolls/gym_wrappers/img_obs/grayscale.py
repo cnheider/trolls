@@ -12,7 +12,6 @@ from typing import Dict, Sequence, Tuple
 import gym
 import gym.spaces
 import numpy
-import numpy as np
 import torch
 from draugr.extensions import rgb_to_grayscale
 from gym.spaces import Box
@@ -59,7 +58,7 @@ class GrayscaleNonTorch(gym.Wrapper, SpacesMixin):
         assert _low == 0
         assert _high == 255
         self._observation_space = gym.spaces.Box(
-            _low, _high, shape=env.observation_space.shape[:-1], dtype=np.uint8
+            _low, _high, shape=env.observation_space.shape[:-1], dtype=numpy.uint8
         )
 
     def reset(self, **kwargs):
@@ -69,7 +68,7 @@ class GrayscaleNonTorch(gym.Wrapper, SpacesMixin):
             **kwargs: Unused.
 
         Returns:
-            np.ndarray: Observation conforming to observation_space
+            numpy.ndarray: Observation conforming to observation_space
         """
         del kwargs
         return rgb_to_grayscale(self.env.reset())
@@ -78,10 +77,10 @@ class GrayscaleNonTorch(gym.Wrapper, SpacesMixin):
         """See gym.Env.
 
         Args:
-            action (np.ndarray): Action conforming to action_space
+            action (numpy.ndarray): Action conforming to action_space
 
         Returns:
-            np.ndarray: Observation conforming to observation_space
+            numpy.ndarray: Observation conforming to observation_space
             float: Reward for this step
             bool: Termination signal
             dict: Extra information from the environment.

@@ -7,5 +7,5 @@ __doc__ = r"""
            Created on 31-03-2021
            """
 
-from .resize import *
 from .grayscale import *
+from .resize import *

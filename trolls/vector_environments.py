@@ -11,6 +11,7 @@ __all__ = ["VectorEnvironments", "VectorEnvironmentsWrapper", "VectorWrap"]
 
 import logging
 from abc import abstractmethod
+
 from .spaces_mixin import SpacesMixin
 
 

@@ -171,7 +171,7 @@ def button(text, x, y, width, height, inactive_color, active_color, action=None,
     click = pygame.mouse.get_pressed()
     if x + width > cur[0] > x and y + height > cur[1] > y:
         pygame.draw.rect(game_display, active_color, (x, y, width, height))
-        if click[0] == 1 and action != None:
+        if click[0] == 1 and action is not None:
             if action == "quit":
                 pygame.quit()
                 quit()

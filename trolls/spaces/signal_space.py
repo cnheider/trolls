@@ -5,7 +5,7 @@ from typing import Sequence
 
 import numpy
 
-from trolls.spaces.range import Range
+from trolls.spaces.dimension import Dimension
 from trolls.spaces.space import Space
 
 __author__ = "Christian Heider Nielsen"
@@ -18,7 +18,7 @@ from warg import Number, cached_property
 class SignalSpace(Space):
     """ """
 
-    def __init__(self, ranges: Sequence[Range], solved_threshold: Number = math.inf):
+    def __init__(self, ranges: Sequence[Dimension], solved_threshold: Number = math.inf):
         super().__init__(ranges)
 
         self.solved_threshold = solved_threshold
@@ -44,7 +44,7 @@ class SignalSpace(Space):
 
 
 class SingleScalarSignalSpaces(SignalSpace):
-    def __init__(self, ranges: Sequence[Range] = (Range(),)):
+    def __init__(self, ranges: Sequence[Dimension] = (Dimension(),)):
         super().__init__(ranges)
 
 
@@ -53,8 +53,8 @@ SSSS = SingleScalarSignalSpaces
 if __name__ == "__main__":
     acs = SignalSpace(
         [
-            Range(min_value=0, max_value=3, decimal_granularity=2),
-            Range(min_value=0, max_value=2, decimal_granularity=1),
+            Dimension(min_value=0, max_value=3, decimal_granularity=2),
+            Dimension(min_value=0, max_value=2, decimal_granularity=1),
         ],
     )
     print(acs, acs.low, acs.high, acs.decimal_granularity)

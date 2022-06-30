@@ -15,6 +15,9 @@ class VectorActionSpace:
     """ """
 
     def __init__(self, action_space: ActionSpace, num_env: int):
+        assert isinstance(
+            action_space, ActionSpace
+        ), f"Action space must be an instance of ActionSpace, was {action_space}"
         self.action_space = action_space
         self.num_env = num_env
 

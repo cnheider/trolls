@@ -14,7 +14,12 @@ class ClippedSignal(gym.RewardWrapper):
     def reward(self, signal: Number) -> Number:
         return self._signal(signal)
 
-    def __init__(self, env: gym.Env = None, negative_clip: Number = 0.0, positive_clip: Number = None):
+    def __init__(
+        self,
+        env: gym.Env = None,
+        negative_clip: Number = 0.0,
+        positive_clip: Number = None,
+    ):
         super().__init__(env)
         self._negative_clip = negative_clip
         self._positive_clip = positive_clip

@@ -7,22 +7,18 @@ Resize wrapper for gym.Env.
            Created on 31-03-2021
            """
 
-from typing import Dict, Sequence, Tuple
-
-from trolls.spaces_mixin import SpacesMixin
 import warnings
+from typing import Dict, Sequence, Tuple
 
 import gym
 import gym.spaces
-import numpy as np
+import numpy
+from gym.spaces import Box
 from skimage import img_as_ubyte
 from skimage.transform import resize
-import gym
-import numpy
-import torch
-from gym.spaces import Box
-from torchvision.transforms import Compose, Grayscale, Normalize, Resize
+from torchvision.transforms import Compose, Normalize, Resize
 
+from trolls.spaces_mixin import SpacesMixin
 
 __all__ = ["Resize", "ResizeObservation"]
 
@@ -75,7 +71,7 @@ class ResizeSkImage(gym.Wrapper, SpacesMixin):
             """
             warnings.simplefilter("ignore")
             obs = resize(obs, (self._width, self._height))  # now it's float
-            if self._dtype == np.uint8:
+            if self._dtype == numpy.uint8:
                 obs = img_as_ubyte(obs)
         return obs
 

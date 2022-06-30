@@ -23,6 +23,7 @@ import cloudpickle
 import gym
 import numpy
 from skimage.transform import resize
+from sorcery import assigned_names
 from warg import Number, drop_unused_kws
 
 from trolls.gym_wrappers import NormalisedActions
@@ -39,7 +40,7 @@ from trolls.spaces import (
 from trolls.spaces_mixin import SpacesMixin
 
 __all__ = [
-    "EnvironmentWorkerCommands",
+    "EnvironmentWorkerCommandsEnum",
     "environment_worker",
     "make_gym_env",
     "MultipleEnvironments",
@@ -48,18 +49,13 @@ __all__ = [
 ]
 
 
-class EnvironmentWorkerCommands(enum.Enum):
+class EnvironmentWorkerCommandsEnum(enum.Enum):
     """ """
 
-    step = enum.auto()
-    reset = enum.auto()
-    close = enum.auto()
-    get_spaces = enum.auto()
-    render = enum.auto()
-    seed = enum.auto()
+    (step, reset, close, get_spaces, render, seed) = assigned_names()
 
 
-EWC = EnvironmentWorkerCommands
+EWC = EnvironmentWorkerCommandsEnum
 
 EnvironmentCommand = namedtuple("EnvironmentCommand", ("command", "data"))
 
@@ -70,7 +66,6 @@ GymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "info"))
 
 class ItemizeNumpy(gym.Wrapper):
     def step(self, action: Union[numpy.ndarray, Number]):
-
         if isinstance(action, (numpy.ndarray, numpy.generic)):
             return super().step(action.item())
         # if isinstance(action, numpy.generic):
@@ -80,6 +75,8 @@ class ItemizeNumpy(gym.Wrapper):
 
 def make_gym_env(env_nam: str, normalise_actions: bool = True) -> callable:
     """ """
+
+    assert env_nam in gym.envs.registry.env_specs, f"{env_nam} not found in gym.envs.registry.env_specs"
 
     @wraps(gym.make)
     def wrapper() -> SpaceWrapper:
@@ -114,8 +111,8 @@ def environment_worker(
         parent_remote.close()
         env = env_fn_wrapper.x()
         terminated = False
-        while True:
 
+        while True:
             cmd, data = remote.recv()
             if cmd is EWC.step:
                 observation, signal, terminal, info = env.step(data)
@@ -157,7 +154,12 @@ class MultipleEnvironments(gym.Env, SpacesMixin):
         """ """
         pass
 
-    def __init__(self, num_environments: int, observation_space: ObservationSpace, action_space: ActionSpace):
+    def __init__(
+        self,
+        num_environments: int,
+        observation_space: ObservationSpace,
+        action_space: ActionSpace,
+    ):
         self._num_environments = num_environments
         self._observation_space = VectorObservationSpace(observation_space, num_environments)
         self._action_space = VectorActionSpace(action_space, num_environments)
@@ -235,7 +237,11 @@ class CloudPickleBase(object):
 class SubProcessEnvironments(MultipleEnvironments):
     """ """
 
-    def __init__(self, environments: Sequence[Callable], auto_reset_on_terminal_state: bool = False):
+    def __init__(
+        self,
+        environments: Sequence[Callable],
+        auto_reset_on_terminal_state: bool = False,
+    ):
         """
         environments: list of gym environment_utilities to run in subprocesses"""
         self._waiting = False
@@ -284,7 +290,9 @@ class SubProcessEnvironments(MultipleEnvironments):
 
     @drop_unused_kws
     def render(
-        self, render_mode: Union[RenderModeEnum, str] = RenderModeEnum.human, only_render_single: bool = True
+        self,
+        render_mode: Union[RenderModeEnum, str] = RenderModeEnum.human,
+        only_render_single: bool = True,
     ) -> Optional[Sequence]:
         """
 
@@ -367,7 +375,7 @@ class SubProcessEnvironments(MultipleEnvironments):
 if __name__ == "__main__":
 
     def asidj():
-        env = SubProcessEnvironments([make_gym_env("Pendulum-v0") for _ in range(3)])
+        env = SubProcessEnvironments([make_gym_env("Pendulum-v1") for _ in range(3)])
         env.reset()
         for i in range(10):
             vector_action = env.action_space.sample()
