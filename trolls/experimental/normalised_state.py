@@ -74,13 +74,14 @@ class VecEnv(ABC):
         :param mode: (str) the rendering type"""
         pass
 
-    @property
-    def unwrapped(self):
-        """ """
-        if isinstance(self, VecEnvWrapper):
-            return self.venv.unwrapped
-        else:
-            return self
+
+@property
+def unwrapped(self):
+    """ """
+    if isinstance(self, VecEnvWrapper):
+        return self.venv.unwrapped
+    else:
+        return self
 
 
 class VecEnvWrapper(VecEnv):

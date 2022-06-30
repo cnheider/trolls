@@ -10,10 +10,10 @@ __author__ = "Christian Heider Nielsen"
 
 from warg import Number, cached_property
 
-__all__ = ["Range"]
+__all__ = ["Dimension"]
 
 
-class Range:
+class Dimension:
     """ """
 
     def __init__(
@@ -34,6 +34,7 @@ class Range:
         # assert decimal_granularity >= 0
 
         self._normalised = normalised
+        decimal_granularity = int(decimal_granularity)
         self._decimal_granularity = decimal_granularity
 
         self._min_value = min_value
@@ -210,12 +211,12 @@ class Range:
     # @functools.lru_cache()
     def __repr__(self) -> str:
         return (
-            f"<Range>\n"
+            f"<Dimension>\n"
             f"<decimal_granularity>{self.decimal_granularity}</decimal_granularity>\n"
             f"<min>{self.min}</min>\n"
             f"<max>{self.max}</max>\n"
             f"<normalised>{self.normalised}</normalised>\n"
-            f"</Range>\n"
+            f"</Dimension>\n"
         )
 
     def __str__(self) -> str:
@@ -284,10 +285,10 @@ class Range:
 
 
 if __name__ == "__main__":
-    r = Range(min_value=0, max_value=5, decimal_granularity=2)
+    r = Dimension(min_value=0, max_value=5, decimal_granularity=2)
     print(r, r.sample())
 
-    r = Range(min_value=0, max_value=2, decimal_granularity=0, normalised=False)
+    r = Dimension(min_value=0, max_value=2, decimal_granularity=0, normalised=False)
     print(r.span, r.sample(), r.discrete_steps, r.max, r.min)
 
     a = 2

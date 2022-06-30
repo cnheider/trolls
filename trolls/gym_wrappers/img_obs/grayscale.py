@@ -16,6 +16,7 @@ import torch
 from draugr.extensions import rgb_to_grayscale
 from gym.spaces import Box
 from torchvision.transforms import Grayscale
+
 from trolls.spaces_mixin import SpacesMixin
 
 __all__ = ["Grayscale", "GrayScaleObservation"]

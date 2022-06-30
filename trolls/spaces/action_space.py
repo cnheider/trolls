@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from typing import List
 
-from trolls.spaces.range import Range
+from trolls.spaces.dimension import Dimension
 from trolls.spaces.space import Space
 
 __author__ = "Christian Heider Nielsen"
@@ -67,16 +67,16 @@ class ActionSpace(Space):
 if __name__ == "__main__":
     acs = ActionSpace(
         [
-            Range(min_value=0, max_value=3, decimal_granularity=2),
-            Range(min_value=0, max_value=2, decimal_granularity=1),
+            Dimension(min_value=0, max_value=3, decimal_granularity=2),
+            Dimension(min_value=0, max_value=2, decimal_granularity=1),
         ]
     )
     print(acs, acs.low, acs.high, acs.decimal_granularity, acs.discrete_steps, acs.shape)
 
     acs = ActionSpace(
         [
-            Range(min_value=0, max_value=3, decimal_granularity=2, normalised=False),
-            Range(min_value=0, max_value=2, decimal_granularity=1, normalised=False),
+            Dimension(min_value=0, max_value=3, decimal_granularity=2, normalised=False),
+            Dimension(min_value=0, max_value=2, decimal_granularity=1, normalised=False),
         ]
     )
     print(
@@ -91,8 +91,8 @@ if __name__ == "__main__":
 
     acs = ActionSpace(
         [
-            Range(min_value=0, max_value=1, decimal_granularity=0, normalised=False),
-            Range(min_value=0, max_value=1, decimal_granularity=0, normalised=False),
+            Dimension(min_value=0, max_value=1, decimal_granularity=0, normalised=False),
+            Dimension(min_value=0, max_value=1, decimal_granularity=0, normalised=False),
         ]
     )
     print(

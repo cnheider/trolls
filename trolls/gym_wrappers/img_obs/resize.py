@@ -17,6 +17,7 @@ from gym.spaces import Box
 from skimage import img_as_ubyte
 from skimage.transform import resize
 from torchvision.transforms import Compose, Normalize, Resize
+
 from trolls.spaces_mixin import SpacesMixin
 
 __all__ = ["Resize", "ResizeObservation"]
