@@ -17,7 +17,11 @@ parser.add_argument("--map-name", default="udem1")
 parser.add_argument("--distortion", default=False, action="store_true")
 parser.add_argument("--camera_rand", default=False, action="store_true")
 parser.add_argument("--actions-curve", action="store_true", help="actions the lane following curve")
-parser.add_argument("--actions-bbox", action="store_true", help="actions collision detection bounding boxes")
+parser.add_argument(
+    "--actions-bbox",
+    action="store_true",
+    help="actions collision detection bounding boxes",
+)
 parser.add_argument("--domain-rand", action="store_true", help="enable domain randomization")
 parser.add_argument("--dynamics_rand", action="store_true", help="enable dynamics randomization")
 parser.add_argument("--frame-skip", default=1, type=int, help="number of frames to skip")
