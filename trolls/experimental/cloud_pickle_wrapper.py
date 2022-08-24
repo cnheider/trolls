@@ -7,7 +7,8 @@ __all__ = ["CloudPickleWrapper"]
 
 class CloudPickleWrapper(object):
     """
-    Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)"""
+    Uses cloudpickle to serialize contents (otherwise multiprocessing tries to use pickle)
+    """
 
     def __init__(self, x):
         self.x = x

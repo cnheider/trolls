@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 __author__ = "Christian Heider Nielsen"
 
-from trolls.experimental.exclude.normalised_actions import *
-
 from .cloud_pickle_wrapper import *
 from .frame_skipping_wrapper import *
 from .no_terminal_state_wrapper import *
