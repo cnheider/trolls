@@ -7,22 +7,24 @@ Grayscale wrapper for gym.Env.
            Created on 31-03-2021
            """
 
-from typing import Dict, Sequence, Tuple
+from typing import Any, Dict, Sequence, Tuple
 
 import gym
 import gym.spaces
 import numpy
 import torch
 from draugr.extensions import rgb_to_grayscale
+from gym import Space
 from gym.spaces import Box
 from torchvision.transforms import Grayscale
 
-from trolls.spaces_mixin import SpacesMixin
+from trolls.spaces import ActionSpace, ObservationSpace, SignalSpace
+from trolls.spaces_mixin import SignalSpaceMixin, SpacesMixin
 
 __all__ = ["Grayscale", "GrayScaleObservation"]
 
 
-class GrayscaleNonTorch(gym.Wrapper, SpacesMixin):
+class GrayscaleNonTorch(gym.Wrapper):
     """Grayscale wrapper for gym.Env, converting frames to grayscale.
 
     Only works with gym.spaces.Box environment with 2D RGB frames.
@@ -43,6 +45,14 @@ class GrayscaleNonTorch(gym.Wrapper, SpacesMixin):
             or environment is not gym.spaces.Box.
 
     """
+
+    @property
+    def observation_space(self) -> Space:
+        return super(gym.RewardWrapper).observation_space
+
+    @property
+    def action_space(self) -> Space[Any]:
+        return super(gym.RewardWrapper).action_space
 
     def __init__(self, env):
         if not isinstance(env.observation_space, gym.spaces.Box):

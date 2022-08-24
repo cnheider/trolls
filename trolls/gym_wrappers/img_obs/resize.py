@@ -23,7 +23,7 @@ from trolls.spaces_mixin import SpacesMixin
 __all__ = ["Resize", "ResizeObservation"]
 
 
-class ResizeSkImage(gym.Wrapper, SpacesMixin):
+class ResizeSkImage(gym.Wrapper):
     """gym.Env wrapper for resizing frame to (width, height).
 
     Only works with gym.spaces.Box environment with 2D single channel frames.

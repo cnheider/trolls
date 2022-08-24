@@ -8,19 +8,20 @@ __doc__ = r"""
            Created on 03-04-2021
            """
 
-__all__ = ["SpacesMixin"]
+__all__ = ["SpacesMixin", "SignalSpaceMixin", "ObservationSpaceMixin", "ActionSpaceMixin"]
 
 from trolls.spaces import ActionSpace, ObservationSpace, SignalSpace
 
 
-class SpacesMixin(ABC):
+class SignalSpaceMixin(ABC):
     @property
     @abstractmethod
-    def action_space(self) -> ActionSpace:
-        """gym.Env: Action space."""
-
+    def signal_space(self) -> SignalSpace:
+        """gym.Env: Signal space."""
         raise NotImplemented
 
+
+class ObservationSpaceMixin(ABC):
     @property
     @abstractmethod
     def observation_space(self) -> ObservationSpace:
@@ -28,8 +29,15 @@ class SpacesMixin(ABC):
 
         raise NotImplemented
 
+
+class ActionSpaceMixin(ABC):
     @property
     @abstractmethod
-    def signal_space(self) -> SignalSpace:
-        """gym.Env: Signal space."""
+    def action_space(self) -> ActionSpace:
+        """gym.Env: Action space."""
+
         raise NotImplemented
+
+
+class SpacesMixin(SignalSpaceMixin, ObservationSpaceMixin, ActionSpaceMixin):
+    pass

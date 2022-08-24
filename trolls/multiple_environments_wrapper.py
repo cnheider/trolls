@@ -146,7 +146,7 @@ def environment_worker(
                 raise NotImplementedError
 
 
-class MultipleEnvironments(gym.Env, SpacesMixin):
+class MultipleEnvironments(gym.Env):
     """
     An abstract asynchronous, vectorized environment."""
 
