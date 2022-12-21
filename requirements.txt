@@ -1,4 +1,5 @@
-gym
+gym==0.21.0 # GYM IS BORKED FROM NOW ON
+gymnasium # Gym succesor
 numpy
 six
 sorcery

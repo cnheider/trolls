@@ -5,7 +5,7 @@ import os
 from warnings import warn
 
 import pkg_resources
-from apppath.app_path import AppPath
+from apppath import AppPath
 
 __project__ = "Trolls"
 __author__ = "Christian Heider Nielsen"

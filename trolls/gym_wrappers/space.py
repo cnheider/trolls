@@ -11,7 +11,7 @@ from typing import List
 
 import gym
 
-from trolls.spaces import ActionSpace, ObservationSpace, Dimension, SignalSpace
+from trolls.spaces import ActionSpace, Dimension, ObservationSpace, SignalSpace
 from trolls.spaces_mixin import SpacesMixin
 
 
@@ -19,10 +19,28 @@ def box_to_dimensions(box_space: gym.spaces.Box) -> List[Dimension]:
     assert isinstance(box_space, gym.spaces.Box), f"{box_space} is not a Box space"
     # TODO: CHECK ASSUMPTIONS!
     # bounded = box_space.is_bounded('below') or box_space.is_bounded('above')
-    return list(
-        Dimension(max_value=high, min_value=low, decimal_granularity=3)
-        for high, low in zip(box_space.high, box_space.low)
-    )
+
+    # print(box_space)
+
+    if (
+        len(box_space.high.shape) == 3  # assume image
+        and box_space.high.shape[-1]
+        and box_space.high[-1, -1, -1] == 255
+        and box_space.low[-1, -1, -1] == 0
+    ):
+        h, w, c = box_space.high.shape
+        return [
+            Dimension(max_value=255, min_value=0, decimal_granularity=0)
+            for _ in range(w)
+            for __ in range(h)
+            for ___ in range(c)
+        ]
+    else:
+
+        return list(
+            Dimension(max_value=high, min_value=low, decimal_granularity=3)
+            for high, low in zip(box_space.high, box_space.low)
+        )
 
 
 def discrete_to_dimensions(box_space: gym.spaces.Discrete) -> List[Dimension]:

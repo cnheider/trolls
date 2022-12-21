@@ -3,6 +3,7 @@
 import functools
 import math
 import sys
+from typing import Iterable
 
 import numpy
 
@@ -30,12 +31,12 @@ class Dimension:
         :param max_value:
         :param decimal_granularity:
         :param normalised:"""
+
         assert max_value >= min_value
         # assert decimal_granularity >= 0
 
         self._normalised = normalised
-        decimal_granularity = int(decimal_granularity)
-        self._decimal_granularity = decimal_granularity
+        self._decimal_granularity = int(decimal_granularity)
 
         self._min_value = min_value
         self._max_value = max_value

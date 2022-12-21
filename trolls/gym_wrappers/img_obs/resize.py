@@ -8,17 +8,16 @@ Resize wrapper for gym.Env.
            """
 
 import warnings
-from typing import Dict, Sequence, Tuple
+from typing import Any, Dict, Sequence, Tuple
 
 import gym
 import gym.spaces
 import numpy
+import torch
 from gym.spaces import Box
 from skimage import img_as_ubyte
 from skimage.transform import resize
 from torchvision.transforms import Compose, Normalize, Resize
-
-from trolls.spaces_mixin import SpacesMixin
 
 __all__ = ["Resize", "ResizeObservation"]
 
@@ -45,7 +44,7 @@ class ResizeSkImage(gym.Wrapper):
 
     """
 
-    def __init__(self, env, width, height):
+    def __init__(self, env: gym.Env, width: int, height: int):
         if not isinstance(env.observation_space, gym.spaces.Box):
             raise ValueError("Resize only works with Box environment.")
 
@@ -62,7 +61,7 @@ class ResizeSkImage(gym.Wrapper):
         self._width = width
         self._height = height
 
-    def _observation(self, obs):
+    def _observation(self, obs) -> Any:
         with warnings.catch_warnings():
             """
             Suppressing warnings for
@@ -86,7 +85,7 @@ class ResizeSkImage(gym.Wrapper):
 
 
 class ResizeObservation(gym.ObservationWrapper):
-    def __init__(self, env, shape):
+    def __init__(self, env: gym.Env, shape):
         super().__init__(env)
         if isinstance(shape, int):
             self.shape = (shape, shape)
@@ -96,7 +95,7 @@ class ResizeObservation(gym.ObservationWrapper):
         obs_shape = self.shape + self.observation_space.shape[2:]
         self.observation_space = Box(low=0, high=255, shape=obs_shape, dtype=numpy.uint8)
 
-    def observation(self, observation):
+    def observation(self, observation) -> torch.Tensor:
         transforms = Compose([Resize(self.shape), Normalize(0, 255)])
         observation = transforms(observation).squeeze(0)
         return observation

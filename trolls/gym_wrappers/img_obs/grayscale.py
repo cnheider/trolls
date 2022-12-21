@@ -18,9 +18,6 @@ from gym import Space
 from gym.spaces import Box
 from torchvision.transforms import Grayscale
 
-from trolls.spaces import ActionSpace, ObservationSpace, SignalSpace
-from trolls.spaces_mixin import SignalSpaceMixin, SpacesMixin
-
 __all__ = ["Grayscale", "GrayScaleObservation"]
 
 
@@ -51,7 +48,7 @@ class GrayscaleNonTorch(gym.Wrapper):
         return super(gym.RewardWrapper).observation_space
 
     @property
-    def action_space(self) -> Space[Any]:
+    def action_space(self) -> Space:
         return super(gym.RewardWrapper).action_space
 
     def __init__(self, env):

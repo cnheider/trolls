@@ -3,8 +3,7 @@
 import functools
 
 # SpaceType = TypeVar("Space", bound=Space)
-from typing import Iterable
-from typing import List, Tuple, Generator, Sequence
+from typing import Generator, Iterable, List, Sequence, Tuple
 
 import numpy
 
@@ -87,12 +86,6 @@ class Space(object):
         :return:"""
         assert len(self.ranges) == len(values)
         return numpy.array([a.clip(v) for a, v in zip(self._ranges, values)])
-
-    def sample(self) -> Iterable[float]:
-        """
-
-        :return:"""
-        return [r.sample() for r in self._ranges]
 
     @property
     def max(self) -> numpy.ndarray:
@@ -252,6 +245,12 @@ class Space(object):
 
     def __eq__(self, other) -> bool:  #:SpaceType
         return True if self.ranges == other.ranges else False
+
+    # def sample(self) -> Iterable[float]:
+    #     """
+    #
+    #     :return:"""
+    #     return [r.sample() for r in self._ranges]
 
     def sample(self) -> List[Number]:
         return self.sampler()

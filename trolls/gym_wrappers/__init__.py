@@ -9,4 +9,5 @@ from .img_obs import *
 from .noisy import *
 from .normalised import *
 from .skip import *
+from .space import *
 from .time_limited import *

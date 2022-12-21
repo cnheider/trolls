@@ -21,13 +21,14 @@ from typing import Any, Callable, Optional, Sequence, Tuple, Union
 
 import cloudpickle
 import gym
+
+assert gym.version.VERSION == "0.21.0"  # GYM around 0.26.0 just broke the api completely
 import numpy
 from skimage.transform import resize
 from sorcery import assigned_names
 from warg import Number, drop_unused_kws
 
-from trolls.gym_wrappers import NormalisedActions
-from trolls.gym_wrappers.space import SpaceWrapper
+from trolls.gym_wrappers import NormalisedActions, SpaceWrapper
 from trolls.render_mode import RenderModeEnum
 from trolls.spaces import (
     ActionSpace,
@@ -37,7 +38,6 @@ from trolls.spaces import (
     VectorObservationSpace,
     VectorSignalSpace,
 )
-from trolls.spaces_mixin import SpacesMixin
 
 __all__ = [
     "EnvironmentWorkerCommandsEnum",
@@ -62,6 +62,7 @@ EnvironmentCommand = namedtuple("EnvironmentCommand", ("command", "data"))
 EC = EnvironmentCommand
 
 GymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "info"))
+NewGymTuple = namedtuple("GymTuple", ("observation", "signal", "terminal", "truncated", "info"))
 
 
 class ItemizeNumpy(gym.Wrapper):
@@ -76,12 +77,15 @@ class ItemizeNumpy(gym.Wrapper):
 def make_gym_env(env_nam: str, normalise_actions: bool = True) -> callable:
     """ """
 
-    assert env_nam in gym.envs.registry.env_specs, f"{env_nam} not found in gym.envs.registry.env_specs"
+    assert (
+        env_nam in gym.envs.registry.env_specs
+    ), f"{env_nam} not found in gym.envs.registry, {gym.envs.registry.env_specs}"
 
     @wraps(gym.make)
     def wrapper() -> SpaceWrapper:
         """ """
         env = gym.make(env_nam)
+        # env = gym.make(env_nam, render_mode='human') # GYM CHANGED! f... it
         if normalise_actions:
             env = NormalisedActions(env)
 
@@ -115,7 +119,9 @@ def environment_worker(
         while True:
             cmd, data = remote.recv()
             if cmd is EWC.step:
-                observation, signal, terminal, info = env.step(data)
+                a = env.step(data)
+                observation, signal, terminal, info = a
+                # observation, signal, terminal, truncated, info = a # GYM CHANGED!
                 if terminated:
                     signal = 0
                 if terminal:
@@ -135,8 +141,12 @@ def environment_worker(
             elif cmd is EWC.get_spaces:
                 remote.send((env.observation_space, env.action_space))
             elif cmd is EWC.render:
-                res = env.render(data)
-                if data != RenderModeEnum.human.value:
+                res = env.render(data.value)  # TODO:GYM CHANGED! just f... it
+                if (
+                    data != RenderModeEnum.human
+                    and data != RenderModeEnum.to_screen
+                    and data != RenderModeEnum.none
+                ):
                     if render_obs_size_tuple:
                         res = resize(res, render_obs_size_tuple)  # VERY SLOW!!!
                     remote.send(res)
@@ -150,7 +160,7 @@ class MultipleEnvironments(gym.Env):
     """
     An abstract asynchronous, vectorized environment."""
 
-    def render(self, mode="human"):
+    def render(self, mode: RenderModeEnum = RenderModeEnum.human):
         """ """
         pass
 
@@ -297,20 +307,21 @@ class SubProcessEnvironments(MultipleEnvironments):
         """
 
         :return:"""
-        if isinstance(render_mode, RenderModeEnum):
-            render_mode_str = render_mode.value
-        else:
-            render_mode_str = render_mode
-            render_mode = RenderModeEnum(render_mode)
+
+        render_mode = RenderModeEnum(render_mode)
 
         remotes = self._remotes
         if only_render_single:
             remotes = remotes[:1]
 
         for remote in remotes:
-            remote.send(EC(EWC.render, render_mode_str))
+            remote.send(EC(EWC.render, render_mode))
 
-        if render_mode != RenderModeEnum.none and render_mode != RenderModeEnum.human:
+        if (
+            render_mode != RenderModeEnum.none
+            and render_mode != RenderModeEnum.human
+            and render_mode != RenderModeEnum.to_screen
+        ):
             self._waiting = True
             res = [remote.recv() for remote in remotes]
             self._waiting = False
@@ -382,7 +393,8 @@ if __name__ == "__main__":
             env.step(vector_action)
             env.render()
 
+        time.sleep(10)
+
         env.close()
-        time.sleep(1)
 
     asidj()
