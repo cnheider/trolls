@@ -10,7 +10,6 @@ __doc__ = r"""
 from typing import List
 
 import gym
-
 from trolls.spaces import ActionSpace, Dimension, ObservationSpace, SignalSpace
 from trolls.spaces_mixin import SpacesMixin
 
@@ -36,7 +35,6 @@ def box_to_dimensions(box_space: gym.spaces.Box) -> List[Dimension]:
             for ___ in range(c)
         ]
     else:
-
         return list(
             Dimension(max_value=high, min_value=low, decimal_granularity=3)
             for high, low in zip(box_space.high, box_space.low)

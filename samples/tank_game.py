@@ -441,7 +441,6 @@ def game_intro():
                 if event.key == pygame.K_c:
                     intro = False
                 elif event.key == pygame.K_q:
-
                     pygame.quit()
                     quit()
 
@@ -558,7 +557,6 @@ def game_loop():
                         if event.key == pygame.K_c:
                             game_loop()
                         elif event.key == pygame.K_q:
-
                             game_exit = True
                             game_over = False
 
@@ -595,7 +593,6 @@ def game_loop():
                     move_index = random.randrange(0, 2)
 
                     for x in range(random.randrange(0, 10)):
-
                         if display_width * 0.3 > enemy_tank_x > display_width * 0.03:
                             if possible_movement[move_index] == "f":
                                 enemy_tank_x += 5

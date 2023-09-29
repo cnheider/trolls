@@ -150,7 +150,6 @@ listener = listen_for_combinations()
 
 
 def to_action(action_set):
-
     if action_set["x"] == 1:
         # if action_set['y'] == 1:
         #  return 4
@@ -172,7 +171,6 @@ def main():
     listener.start()
     a = None
     while 1:  # ACTION_SET['halt']!=-1: # should not be necessary
-
         terminated = False
         signal = 0
 

@@ -4,7 +4,6 @@ import math
 from typing import Sequence
 
 import numpy
-
 from trolls.spaces.dimension import Dimension
 from trolls.spaces.space import Space
 

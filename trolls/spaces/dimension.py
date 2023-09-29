@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+
 import functools
 import math
 import sys
-from typing import Iterable
 
 import numpy
 
@@ -15,7 +16,9 @@ __all__ = ["Dimension"]
 
 
 class Dimension:
-    """ """
+    """
+    A singular dimension of a space
+    """
 
     def __init__(
         self,

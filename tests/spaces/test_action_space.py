@@ -8,7 +8,7 @@ __doc__ = r"""
            Created on 15/09/2019
            """
 
-from trolls.spaces import Dimension, SignalSpace
+from trolls.spaces import SignalSpace, Dimension
 
 
 def test1():

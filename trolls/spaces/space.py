@@ -6,11 +6,10 @@ import functools
 from typing import Generator, Iterable, List, Sequence, Tuple
 
 import numpy
+from trolls.spaces.dimension import Dimension
 
 # from typing import Type, TypeVar, Union,
 from warg import Number, cached_property
-
-from trolls.spaces.dimension import Dimension
 
 __author__ = "Christian Heider Nielsen"
 

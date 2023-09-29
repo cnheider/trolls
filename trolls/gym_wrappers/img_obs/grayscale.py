@@ -7,7 +7,7 @@ Grayscale wrapper for gym.Env.
            Created on 31-03-2021
            """
 
-from typing import Any, Dict, Sequence, Tuple
+from typing import Dict, Sequence, Tuple
 
 import gym
 import gym.spaces

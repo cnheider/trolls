@@ -46,7 +46,8 @@ class VecEnv(ABC):
     def step_wait(self):
         """
         Wait for the step taken with step_async().
-        :return: ([int] or [float], [float], [bool], dict) observation, reward, done, information"""
+        :return: ([int] or [float], [float], [bool], dict) observation, reward, done, information
+        """
         pass
 
     @abstractmethod
@@ -59,7 +60,8 @@ class VecEnv(ABC):
         """
         Step the environments with the given action
         :param actions: ([int] or [float]) the action
-        :return: ([int] or [float], [float], [bool], dict) observation, reward, done, information"""
+        :return: ([int] or [float], [float], [bool], dict) observation, reward, done, information
+        """
         self.step_async(actions)
         return self.step_wait()
 

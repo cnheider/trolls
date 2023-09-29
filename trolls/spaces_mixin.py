@@ -8,7 +8,12 @@ __doc__ = r"""
            Created on 03-04-2021
            """
 
-__all__ = ["SpacesMixin", "SignalSpaceMixin", "ObservationSpaceMixin", "ActionSpaceMixin"]
+__all__ = [
+    "SpacesMixin",
+    "SignalSpaceMixin",
+    "ObservationSpaceMixin",
+    "ActionSpaceMixin",
+]
 
 from trolls.spaces import ActionSpace, ObservationSpace, SignalSpace
 
